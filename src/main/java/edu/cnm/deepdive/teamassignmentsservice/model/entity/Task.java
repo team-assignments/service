@@ -22,7 +22,7 @@ public class Task {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "task_id",nullable = false,updatable = false)
+  @Column(name = "task_id", nullable = false, updatable = false)
   private Long id;
 
 
@@ -40,6 +40,10 @@ public class Task {
 
   @Enumerated(EnumType.ORDINAL)
   private Role role;
+
+  @ManyToOne(fetch = FetchType.EAGER, optional = false)
+  @JoinColumn(name = "group_id")
+  private Group groupId;
 
   public Long getId() {
     return id;
@@ -73,4 +77,11 @@ public class Task {
     this.role = role;
   }
 
+  public Group getGroupId() {
+    return groupId;
+  }
+
+  public void setGroupId(Group groupId) {
+    this.groupId = groupId;
+  }
 }
