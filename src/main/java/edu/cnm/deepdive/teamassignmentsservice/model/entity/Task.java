@@ -32,6 +32,8 @@ public class Task {
   @Column(nullable = false, updatable = false)
   private Date postDate;
 
+  
+
   @Temporal(TemporalType.TIMESTAMP)
   private Date dueDate;
 
