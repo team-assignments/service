@@ -17,6 +17,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.lang.NonNull;
 
 
 @Entity
@@ -39,11 +40,10 @@ public class Group {
   @Column(nullable = false, updatable = true, unique = true)
   private String name;
 
-  @OneToMany(fetch = FetchType.LAZY,
-      mappedBy = "group",
-      cascade = CascadeType.ALL)
-  @OrderBy("postDate DESC")
-  private List<Task> tasks = new LinkedList<>();
+  @NonNull
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
+  @OrderBy ("postDate DESC")
+  private final List<Task> tasks = new LinkedList<>();
 
   public Long getId() {
     return id;
