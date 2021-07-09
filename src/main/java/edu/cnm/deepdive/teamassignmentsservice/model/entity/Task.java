@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.lang.NonNull;
 
 @Entity
 public class Task {
@@ -38,12 +39,14 @@ public class Task {
   @JoinColumn(name = "user_id")
   private User user;
 
+
   @Enumerated(EnumType.ORDINAL)
   private Role role;
 
+  @NonNull
   @ManyToOne(fetch = FetchType.EAGER, optional = false)
-  @JoinColumn(name = "group_id")
-  private Group groupId;
+  @JoinColumn(name = "group_id", nullable = false, updatable = false)
+  private Group group;
 
   public Long getId() {
     return id;
@@ -77,11 +80,11 @@ public class Task {
     this.role = role;
   }
 
-  public Group getGroupId() {
-    return groupId;
+  public Group getGroup() {
+    return group;
   }
 
-  public void setGroupId(Group groupId) {
-    this.groupId = groupId;
+  public void setGroup(Group groupId) {
+    this.group = groupId;
   }
 }
