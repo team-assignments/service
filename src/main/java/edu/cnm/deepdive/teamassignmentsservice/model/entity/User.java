@@ -13,11 +13,12 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.lang.NonNull;
 
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(
     name = "user_profile",
     indexes = {
-        @Index(columnList = "lastName, firstName", unique = true)
+        @Index(columnList = "displayName", unique = true)
     }
 )
 public class User {
@@ -34,9 +35,6 @@ public class User {
 
   @Column(nullable = false)
   private String displayName;
-
-  @Column(nullable = false, updatable = false, unique = true)
-  private String googleId;
 
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
@@ -72,13 +70,6 @@ public class User {
     this.displayName = displayName;
   }
 
-  public String getGoogleId() {
-    return googleId;
-  }
-
-  public void setGoogleId(String googleId) {
-    this.googleId = googleId;
-  }
 
   public Date getCreationDate() {
     return creationDate;
