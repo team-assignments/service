@@ -11,12 +11,14 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.lang.NonNull;
 
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(
     name = "user_profile",
     indexes = {
-        @Index(columnList = "lastName, firstName", unique = true)
+        @Index(columnList = "displayName", unique = true)
     }
 )
 public class User {
@@ -26,53 +28,65 @@ public class User {
   @Column(name = "user_id", nullable = false, updatable = false)
   private Long id;
 
+  @NonNull
+  @Temporal(TemporalType.TIMESTAMP)
   @Column(nullable = false)
-  private String firstName;
+  private Date connected;
 
   @Column(nullable = false)
-  private String lastName;
-
-  @Column(nullable = false, updatable = false, unique = true)
-  private String googleId;
+  private String displayName;
 
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column(nullable = false, updatable = false)
   private Date creationDate;
 
+  @NonNull
+  @Column(nullable = false, updatable = false, unique = true)
+  private String oauthKey;
+
   public Long getId() {
     return id;
   }
 
-  public String getFirstName() {
-    return firstName;
+  public void setId(Long id) {
+    this.id = id;
   }
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
+  @NonNull
+  public Date getConnected() {
+    return connected;
   }
 
-  public String getLastName() {
-    return lastName;
+  public void setConnected(@NonNull Date connected) {
+    this.connected = connected;
   }
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
+  public String getDisplayName() {
+    return displayName;
   }
 
-  public String getGoogleId() {
-    return googleId;
+  public void setDisplayName(String displayName) {
+    this.displayName = displayName;
   }
 
-  public void setGoogleId(String googleId) {
-    this.googleId = googleId;
-
-  }
 
   public Date getCreationDate() {
     return creationDate;
   }
 
+  public void setCreationDate(Date creationDate) {
+    this.creationDate = creationDate;
+  }
+
+  @NonNull
+  public String getOauthKey() {
+    return oauthKey;
+  }
+
+  public void setOauthKey(@NonNull String oauthKey) {
+    this.oauthKey = oauthKey;
+  }
 
   public enum Role {
     OWNER, MEMBER

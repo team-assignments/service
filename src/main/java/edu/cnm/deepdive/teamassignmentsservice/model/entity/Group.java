@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.springframework.data.annotation.CreatedDate;
@@ -21,6 +22,7 @@ import org.springframework.lang.NonNull;
 
 
 @Entity
+@Table(name = "user_group")
 public class Group {
 
   @GeneratedValue(strategy = GenerationType.AUTO)
