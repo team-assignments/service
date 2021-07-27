@@ -17,8 +17,6 @@ public class GroupService {
     this.repository = repository;
   }
 
-  List<Group> getIdGroupsByNameAsc(User user, Group group) {
-    return repository.findAllByIdAndNameOrderByNameAsc(user, group);
-  }
+
 
 }

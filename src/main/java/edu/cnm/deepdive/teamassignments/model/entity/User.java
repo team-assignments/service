@@ -3,6 +3,7 @@ package edu.cnm.deepdive.teamassignments.model.entity;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,6 +14,7 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -62,6 +64,11 @@ public class User {
   @NonNull
   private final List<Group> groups = new LinkedList<>();
 
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+  @OrderBy("dueDate desc")
+  @NonNull
+  private final List<Task> tasks = new LinkedList<>();
+
   public Long getId() {
     return id;
   }
@@ -110,7 +117,8 @@ public class User {
     return groups;
   }
 
-  public enum Role {
-    OWNER, MEMBER
+  @NonNull
+  public List<Task> getTasks() {
+    return tasks;
   }
 }

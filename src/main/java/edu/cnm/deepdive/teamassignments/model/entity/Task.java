@@ -1,7 +1,7 @@
 package edu.cnm.deepdive.teamassignments.model.entity;
 
 
-import edu.cnm.deepdive.teamassignments.model.entity.User.Role;
+
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,20 +38,17 @@ public class Task {
   private Date dueDate;
 
   @ManyToOne(fetch = FetchType.LAZY, optional = true)
-  @JoinColumn(name = "user_id")
+  @JoinColumn(name = "user_id")    //investigate if assignment will happen immediately on creation, if so nullable = false. If chagne user updateable = false.
   private User user;
 
-
-  @Enumerated(EnumType.ORDINAL)
-  private Role role;
 
   @NonNull
   @ManyToOne(fetch = FetchType.EAGER, optional = false)
   @JoinColumn(name = "group_id", nullable = false, updatable = false)
   private Group group;
 
-
-  private Boolean completed;
+  @Column(nullable = false, updatable = true)
+  private boolean completed;
 
   public Long getId() {
     return id;
@@ -77,19 +74,19 @@ public class Task {
     this.user = user;
   }
 
-  public Role getRole() {
-    return role;
-  }
-
-  public void setRole(Role role) {
-    this.role = role;
-  }
-
   public Group getGroup() {
     return group;
   }
 
   public void setGroup(Group groupId) {
     this.group = groupId;
+  }
+
+  public boolean isCompleted() {
+    return completed;
+  }
+
+  public void setCompleted(boolean completed) {
+    this.completed = completed;
   }
 }
