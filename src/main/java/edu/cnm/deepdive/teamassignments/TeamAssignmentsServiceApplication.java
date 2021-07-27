@@ -1,4 +1,4 @@
-package edu.cnm.deepdive.teamassignmentsservice;
+package edu.cnm.deepdive.teamassignments;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

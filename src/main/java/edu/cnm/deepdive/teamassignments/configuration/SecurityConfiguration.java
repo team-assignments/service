@@ -1,5 +1,5 @@
-package edu.cnm.deepdive.teamassignmentsservice.configuration;
-import edu.cnm.deepdive.teamassignmentsservice.service.UserService;
+package edu.cnm.deepdive.teamassignments.configuration;
+import edu.cnm.deepdive.teamassignments.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

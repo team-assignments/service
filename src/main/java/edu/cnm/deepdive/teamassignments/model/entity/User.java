@@ -1,12 +1,19 @@
-package edu.cnm.deepdive.teamassignmentsservice.model.entity;
+package edu.cnm.deepdive.teamassignments.model.entity;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -44,6 +51,16 @@ public class User {
   @NonNull
   @Column(nullable = false, updatable = false, unique = true)
   private String oauthKey;
+
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(
+      name = "user_group",
+      joinColumns = @JoinColumn(name = "user_id", nullable = false, updatable = false),
+      inverseJoinColumns = @JoinColumn(name = "group_id", nullable = false, updatable = false)
+  )
+  @OrderBy("name ASC")
+  @NonNull
+  private final List<Group> groups = new LinkedList<>();
 
   public Long getId() {
     return id;
@@ -86,6 +103,11 @@ public class User {
 
   public void setOauthKey(@NonNull String oauthKey) {
     this.oauthKey = oauthKey;
+  }
+
+  @NonNull
+  public List<Group> getGroups() {
+    return groups;
   }
 
   public enum Role {

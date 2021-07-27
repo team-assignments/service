@@ -1,7 +1,7 @@
-package edu.cnm.deepdive.teamassignmentsservice.service;
+package edu.cnm.deepdive.teamassignments.service;
 
-import edu.cnm.deepdive.teamassignmentsservice.model.dao.UserRepository;
-import edu.cnm.deepdive.teamassignmentsservice.model.entity.User;
+import edu.cnm.deepdive.teamassignments.model.dao.UserRepository;
+import edu.cnm.deepdive.teamassignments.model.entity.User;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;

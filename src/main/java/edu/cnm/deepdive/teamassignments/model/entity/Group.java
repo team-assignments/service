@@ -1,4 +1,4 @@
-package edu.cnm.deepdive.teamassignmentsservice.model.entity;
+package edu.cnm.deepdive.teamassignments.model.entity;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
@@ -47,6 +48,11 @@ public class Group {
   @OrderBy ("postDate DESC")
   private final List<Task> tasks = new LinkedList<>();
 
+  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "groups")
+  @OrderBy("displayName ASC")
+  @NonNull
+  private final List<User> users = new LinkedList<>();
+
   public Long getId() {
     return id;
   }
@@ -69,5 +75,15 @@ public class Group {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  @NonNull
+  public List<Task> getTasks() {
+    return tasks;
+  }
+
+  @NonNull
+  public List<User> getUsers() {
+    return users;
   }
 }

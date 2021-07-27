@@ -1,7 +1,7 @@
-package edu.cnm.deepdive.teamassignmentsservice.model.entity;
+package edu.cnm.deepdive.teamassignments.model.entity;
 
 
-import edu.cnm.deepdive.teamassignmentsservice.model.entity.User.Role;
+import edu.cnm.deepdive.teamassignments.model.entity.User.Role;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,6 +49,9 @@ public class Task {
   @ManyToOne(fetch = FetchType.EAGER, optional = false)
   @JoinColumn(name = "group_id", nullable = false, updatable = false)
   private Group group;
+
+
+  private Boolean completed;
 
   public Long getId() {
     return id;
