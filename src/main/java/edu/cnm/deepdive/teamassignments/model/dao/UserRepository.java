@@ -13,9 +13,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   @Query("select distinct "
       + "u from User as u "
-      + "inner join Group as g "
-      + "inner join Task as t on t.user = u and t.group = g "
-      + "where g = :group and t.completed = :completed and t.dueDate < :cutoff "
+      + "inner join u.groups as g "
+      + "inner join g.tasks as t "
+      + "where g = :group and t.completed = :completed and t.dueDate < :cutoff and t.user = u "
       + "order by u.displayName")
   Iterable<User> findAllByGroupsContainingAndTasksNotCompletedAndOverdue(Group group, boolean completed, Date cutoff);
 
@@ -23,15 +23,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   @Query("select distinct "
       + "u from User as u "
-      + "inner join Group as g "
+      + "inner join u.groups as g "
       + "where g.owner = :owner "
       + "order by u.displayName")
   Iterable<User> findAllUsersInMyOwnGroups(User owner);
 
   @Query("select distinct "
       + "u1 from User as u1 "
-      + "inner join Group as g "
-      + "inner join User as u2 "
+      + "inner join u1.groups as g "
+      + "inner join g.users as u2 "
       + "where u1 <> u2 "
       + "and u1 = :user "
       + "order by u1.displayName")
