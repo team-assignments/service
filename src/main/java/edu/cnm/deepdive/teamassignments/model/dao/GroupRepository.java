@@ -9,4 +9,10 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
   List<Group> findAllByUsersContainingOrderByNameAsc(User user);
 
+  List<Group> findAllByOwnerOrderByNameAsc(User owner);
+
+  List<Group> findAllByUsersContainingAndInvitedOrderByCreationDateAsc(User user, Group group);
+
+  List<Group> findAllByOwnerContainingAndInvitedOrderByIdAsc(User owner, boolean invited);
+
 }

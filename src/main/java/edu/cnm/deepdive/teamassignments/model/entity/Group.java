@@ -53,6 +53,9 @@ public class Group {
   @NonNull
   private final List<User> users = new LinkedList<>();
 
+  @Column(nullable = false, updatable = true)
+  private boolean invited;
+
   public Long getId() {
     return id;
   }
@@ -85,5 +88,13 @@ public class Group {
   @NonNull
   public List<User> getUsers() {
     return users;
+  }
+
+  public boolean isInvited() {
+    return invited;
+  }
+
+  public void setInvited(boolean invited) {
+    this.invited = invited;
   }
 }
