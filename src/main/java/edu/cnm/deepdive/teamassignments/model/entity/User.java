@@ -64,6 +64,11 @@ public class User {
   @NonNull
   private final List<Group> groups = new LinkedList<>();
 
+  @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OrderBy("name ASC")
+  @NonNull
+  private final List<Group> ownedGroups = new LinkedList<>();
+
   @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @OrderBy("dueDate desc")
   @NonNull
@@ -115,6 +120,11 @@ public class User {
   @NonNull
   public List<Group> getGroups() {
     return groups;
+  }
+
+  @NonNull
+  public List<Group> getOwnedGroups() {
+    return ownedGroups;
   }
 
   @NonNull

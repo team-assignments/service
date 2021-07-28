@@ -19,4 +19,21 @@ public interface UserRepository extends JpaRepository<User, Long> {
       + "order by u.displayName")
   Iterable<User> findAllByGroupsContainingAndTasksNotCompletedAndOverdue(Group group, boolean completed, Date cutoff);
 
+  Iterable<User> findAllByGroupsNotEmptyOrderByDisplayNameAsc();
+
+  @Query("select distinct "
+      + "u from User as u "
+      + "inner join Group as g "
+      + "where g.owner = :owner "
+      + "order by u.displayName")
+  Iterable<User> findAllUsersInMyOwnGroups(User owner);
+
+  @Query("select distinct "
+      + "u1 from User as u1 "
+      + "inner join Group as g "
+      + "inner join User as u2 "
+      + "where u1 <> u2 "
+      + "and u1 = :user "
+      + "order by u1.displayName")
+  Iterable<User> findAllUserInMyGroups(User user);
 }
