@@ -32,7 +32,6 @@ public class Task {
   @Column(nullable = false, updatable = false)
   private Date postDate;
 
-  
 
   @Temporal(TemporalType.TIMESTAMP)
   private Date dueDate;
@@ -48,7 +47,10 @@ public class Task {
   private Group group;
 
   @Column(nullable = false, updatable = true)
+
   private boolean completed;
+
+  private boolean confirmedComplete;
 
   public Long getId() {
     return id;
