@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.teamassignments.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -62,11 +63,13 @@ public class User {
   )
   @OrderBy("name ASC")
   @NonNull
+  @JsonIgnore
   private final List<Group> groups = new LinkedList<>();
 
   @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @OrderBy("name ASC")
   @NonNull
+  @JsonIgnore
   private final List<Group> ownedGroups = new LinkedList<>();
 
   @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})

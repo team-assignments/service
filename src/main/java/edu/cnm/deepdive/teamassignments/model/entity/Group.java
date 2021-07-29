@@ -18,12 +18,13 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.lang.NonNull;
 
 
 @Entity
-@Table(name = "user_group")
+@Table(name = "group_team")
 public class Group {
 
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,7 +36,7 @@ public class Group {
   @JoinColumn(name = "owner_id", nullable = false, updatable = false)
   private User owner;
 
-  @CreatedDate
+  @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column(nullable = false, updatable = false)
   private Date creationDate;
