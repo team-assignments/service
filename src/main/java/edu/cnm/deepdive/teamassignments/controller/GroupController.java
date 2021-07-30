@@ -35,15 +35,19 @@ public class GroupController {
 
   }
 
-  @PutMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Group putMember(@PathVariable long id, @RequestBody User member, Authentication auth) {
+  @PutMapping(value = "/{groupId:\\d+}/members/{userId:\\d+}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public boolean putMembership(@PathVariable long groupId, @PathVariable long userId,
+      @RequestBody boolean inGroup, Authentication auth) {
 
-    return service.get(id, (User) auth.getPrincipal()).map((group) -> {
-      group.getUsers().add(member);
-      return service.save(group, member);
-    })
-        .orElseThrow();
+    return service.toggleMembership(groupId, userId, inGroup, (User) auth.getPrincipal());
 
+
+  }
+
+  @GetMapping(value = "/{groupId:\\d+}/members/{userId:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public boolean putMembership(@PathVariable long groupId, @PathVariable long userId, Authentication auth) {
+
+    return service.checkMembership(groupId, userId, (User) auth.getPrincipal());
 
 
   }
@@ -54,6 +58,7 @@ public class GroupController {
     return service.get(id, (User) auth.getPrincipal()).orElseThrow();
 
   }
+
   @PutMapping(value = "/{id:\\d+}/name", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public String replaceName(@PathVariable long id, @RequestBody String name, Authentication auth) {
 
@@ -63,6 +68,8 @@ public class GroupController {
 
 
   }
+
+
 
   @DeleteMapping(value = "/{id:\\d+}")
   @ResponseStatus(HttpStatus.NO_CONTENT)

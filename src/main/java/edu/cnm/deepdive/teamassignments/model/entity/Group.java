@@ -1,8 +1,10 @@
 package edu.cnm.deepdive.teamassignments.model.entity;
 
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -51,10 +54,14 @@ public class Group {
   @OrderBy ("postDate DESC")
   private final List<Task> tasks = new LinkedList<>();
 
-  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "groups")
+  @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
+  @JoinTable(
+      name = "user_group",
+      joinColumns = @JoinColumn(name = "group_id", nullable = false, updatable = false),
+      inverseJoinColumns = @JoinColumn(name = "user_id", nullable = false, updatable = false)
+  )
   @OrderBy("displayName ASC")
-
-  private final List<User> users = new LinkedList<>();
+  private final Set<User> users = new LinkedHashSet<>();
 
 
 // // @Column(nullable = false, updatable = true)
@@ -93,7 +100,7 @@ public class Group {
   }
 
   @NonNull
-  public List<User> getUsers() {
+  public Set<User> getUsers() {
     return users;
   }
 

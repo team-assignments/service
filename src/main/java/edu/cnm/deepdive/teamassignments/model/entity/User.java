@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -55,12 +56,7 @@ public class User {
   @Column(nullable = false, updatable = false, unique = true)
   private String oauthKey;
 
-  @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(
-      name = "user_group",
-      joinColumns = @JoinColumn(name = "user_id", nullable = false, updatable = false),
-      inverseJoinColumns = @JoinColumn(name = "group_id", nullable = false, updatable = false)
-  )
+  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users") // added cascade
   @OrderBy("name ASC")
   @NonNull
   @JsonIgnore
@@ -134,5 +130,22 @@ public class User {
   @NonNull
   public List<Task> getTasks() {
     return tasks;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(id);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    boolean matches = false;
+    if(this == obj) {
+      matches = true;
+    } else if(obj instanceof User){
+      User other = (User) obj;
+      matches = (id != null && id.equals(other.id));
+    }
+    return matches;
   }
 }

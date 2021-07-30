@@ -5,6 +5,7 @@ import edu.cnm.deepdive.teamassignments.model.entity.User;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -41,7 +42,9 @@ public class UserService implements Converter <Jwt, UsernamePasswordAuthenticati
     return repository.save(user);   //TODO review with team
   }
 
-
+  public Optional<User> get(long id) {
+    return repository.findById(id);
+  }
 
   @Override
   public UsernamePasswordAuthenticationToken convert(Jwt jwt) {
