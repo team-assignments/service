@@ -62,35 +62,67 @@ public class Group {
 //  @Nullable
 //  private final List<User> invitedUsers = new LinkedList<>();
 
+  /**
+   * getter for id.
+   * @return
+   */
   public Long getId() {
     return id;
   }
 
+  /**
+   * getter for creationDate.
+   * @return
+   */
   public Date getCreationDate() {
     return creationDate;
   }
 
+  /**
+   * getter for owner.
+   * @return
+   */
   public User getOwner() {
     return owner;
   }
 
+  /**
+   * setter for owner.
+   * @param owner
+   */
   public void setOwner(User owner) {
     this.owner = owner;
   }
 
+  /**
+   * getter for name.
+   * @return
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * setter for name.
+   * @param name
+   */
   public void setName(String name) {
     this.name = name;
   }
 
+  /**
+   * getter for list tasks.
+   * @return
+   */
   @NonNull
   public List<Task> getTasks() {
     return tasks;
   }
 
+  /**
+   * getter for users.
+   * @return
+   */
   @NonNull
   public Set<User> getUsers() {
     return users;

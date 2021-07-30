@@ -18,16 +18,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * controller for group.
+ */
 @RestController
 @RequestMapping("/groups")
 public class GroupController {
 
   private final GroupService service;
 
+  /**
+   * constructor for group
+   * @param service
+   */
   public GroupController(GroupService service) {
     this.service = service;
   }
 
+  /**
+   * Post mapping for group.
+   * @param group
+   * @param auth
+   * @return
+   */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public Group post(@RequestBody Group group, Authentication auth) {
 
@@ -35,6 +48,14 @@ public class GroupController {
 
   }
 
+  /**
+   * Put mapping for membership.
+   * @param groupId
+   * @param userId
+   * @param inGroup
+   * @param auth
+   * @return
+   */
   @PutMapping(value = "/{groupId:\\d+}/members/{userId:\\d+}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public boolean putMembership(@PathVariable long groupId, @PathVariable long userId,
       @RequestBody boolean inGroup, Authentication auth) {
@@ -44,6 +65,13 @@ public class GroupController {
 
   }
 
+  /**
+   * put mapping for checking membership.
+   * @param groupId
+   * @param userId
+   * @param auth
+   * @return
+   */
   @GetMapping(value = "/{groupId:\\d+}/members/{userId:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
   public boolean putMembership(@PathVariable long groupId, @PathVariable long userId, Authentication auth) {
 
@@ -52,6 +80,12 @@ public class GroupController {
 
   }
 
+  /**
+   * get mapping for group.
+   * @param id
+   * @param auth
+   * @return
+   */
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Group get(@PathVariable long id, Authentication auth) {
 
@@ -59,6 +93,13 @@ public class GroupController {
 
   }
 
+  /**
+   * put mapping for renaming group.
+   * @param id
+   * @param name
+   * @param auth
+   * @return
+   */
   @PutMapping(value = "/{id:\\d+}/name", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public String replaceName(@PathVariable long id, @RequestBody String name, Authentication auth) {
 
@@ -70,7 +111,11 @@ public class GroupController {
   }
 
 
-
+  /**
+   * delete mapping for group.
+   * @param id
+   * @param auth
+   */
   @DeleteMapping(value = "/{id:\\d+}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable long id, Authentication auth) {

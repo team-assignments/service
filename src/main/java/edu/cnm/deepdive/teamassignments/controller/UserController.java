@@ -12,22 +12,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * User controller
+ */
 @RestController
 @RequestMapping("users")
 public class UserController {
 
   private final UserService userService;
 
+  /**
+   * User controller constructor.
+   * @param userService
+   */
   @Autowired
   public UserController(UserService userService) {
     this.userService = userService;
   }
 
+  /**
+   * get mapping for user.
+   * @param auth
+   * @return
+   */
   @GetMapping(value = "/me", produces = MediaType.APPLICATION_JSON_VALUE)
   public User me(Authentication auth) {
     return (User) auth.getPrincipal();
   }
 
+  /**
+   * post mapping for user.
+   * @param user
+   * @param auth
+   * @return
+   */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE) //TODO review with team
   public User post(@RequestBody User user, Authentication auth) {
 

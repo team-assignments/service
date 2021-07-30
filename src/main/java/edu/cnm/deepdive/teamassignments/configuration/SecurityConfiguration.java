@@ -29,6 +29,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Value("${spring.security.oauth2.resourceserver.jwt.client-id}")
   private String clientId;
 
+  /**
+   * user service security configuration.
+   * @param userService
+   */
   public SecurityConfiguration(UserService userService) {
     this.userService = userService;
   }
@@ -41,6 +45,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .jwtAuthenticationConverter(userService);
   }
 
+  /**
+   * Jwt Decoder.
+   * @return
+   */
  @Bean
   public JwtDecoder jwtDecoder() {
     NimbusJwtDecoder decoder = JwtDecoders.fromIssuerLocation(issuerUri);

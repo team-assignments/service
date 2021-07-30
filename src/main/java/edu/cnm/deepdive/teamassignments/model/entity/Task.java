@@ -53,50 +53,98 @@ public class Task {
   @Column(nullable = false, updatable = true)
   private boolean confirmedComplete;
 
+  /**
+   * getter for id.
+   * @return
+   */
   public Long getId() {
     return id;
   }
 
+  /**
+   * getter for postDate.
+   * @return
+   */
   public Date getPostDate() {
     return postDate;
   }
 
+  /**
+   * getter for dueDate.
+   * @return
+   */
   public Date getDueDate() {
     return dueDate;
   }
 
+  /**
+   * setter for dueDate.
+   * @param dueDate
+   */
   public void setDueDate(Date dueDate) {
     this.dueDate = dueDate;
   }
 
+  /**
+   * getter for user.
+   * @return
+   */
   public User getUser() {
     return user;
   }
 
+  /**
+   * setter for user.
+   * @param user
+   */
   public void setUser(User user) {
     this.user = user;
   }
 
+  /**
+   * getter for group.
+   * @return
+   */
   public Group getGroup() {
     return group;
   }
 
+  /**
+   * setter for group.
+   * @param groupId
+   */
   public void setGroup(Group groupId) {
     this.group = groupId;
   }
 
+  /**
+   * boolean for isCompleted.
+   * @return
+   */
   public boolean isCompleted() {
     return completed;
   }
 
+  /**
+   * boolean is completed.
+   * @param completed
+   */
   public void setCompleted(boolean completed) {
     this.completed = completed;
   }
 
+  /**
+   * boolean is confirmed complete.
+   * @return
+   */
   public boolean isConfirmedComplete() {
     return confirmedComplete;
   }
 
+  /**
+   * boolean set confirmed complete.
+   * @param confirmedComplete
+   */
   public void setConfirmedComplete(boolean confirmedComplete) {
     this.confirmedComplete = confirmedComplete;
   }
