@@ -18,9 +18,11 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Null;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 
 @Entity
@@ -44,18 +46,22 @@ public class Group {
   @Column(nullable = false, updatable = true, unique = true)
   private String name;
 
-  @NonNull
+
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
   @OrderBy ("postDate DESC")
   private final List<Task> tasks = new LinkedList<>();
 
   @ManyToMany(fetch = FetchType.LAZY, mappedBy = "groups")
   @OrderBy("displayName ASC")
-  @NonNull
+
   private final List<User> users = new LinkedList<>();
 
-  @Column(nullable = false, updatable = true)
-  private boolean invited;
+
+// // @Column(nullable = false, updatable = true)
+//  @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
+//  @OrderBy("displayName ASC")
+//  @Nullable
+//  private final List<User> invitedUsers = new LinkedList<>();
 
   public Long getId() {
     return id;
@@ -91,11 +97,10 @@ public class Group {
     return users;
   }
 
-  public boolean isInvited() {
-    return invited;
-  }
 
-  public void setInvited(boolean invited) {
-    this.invited = invited;
-  }
+
+//  @Nullable
+//  public List<User> getInvitedUsers() {
+//    return invitedUsers;
+//  }
 }

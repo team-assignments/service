@@ -7,6 +7,7 @@ import java.util.function.Function;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,19 +35,32 @@ public class GroupController {
 
   }
 
+  @PutMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Group putMember(@PathVariable long id, @RequestBody User member, Authentication auth) {
+
+    return service.get(id, (User) auth.getPrincipal()).map((group) -> {
+      group.getUsers().add(member);
+      return service.save(group, member);
+    })
+        .orElseThrow();
+
+
+
+  }
+
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Group get(@PathVariable long id, Authentication auth) {
 
     return service.get(id, (User) auth.getPrincipal()).orElseThrow();
 
   }
-
   @PutMapping(value = "/{id:\\d+}/name", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public String replaceName(@PathVariable long id, @RequestBody String name, Authentication auth) {
 
     return service.rename(id, name, (User) auth.getPrincipal())
         .map(Group::getName)
         .orElseThrow();
+
 
   }
 

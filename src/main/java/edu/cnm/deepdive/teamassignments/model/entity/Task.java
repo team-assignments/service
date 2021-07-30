@@ -48,9 +48,9 @@ public class Task {
   private Group group;
 
   @Column(nullable = false, updatable = true)
-
   private boolean completed;
 
+  @Column(nullable = false, updatable = true)
   private boolean confirmedComplete;
 
   public Long getId() {
@@ -91,5 +91,13 @@ public class Task {
 
   public void setCompleted(boolean completed) {
     this.completed = completed;
+  }
+
+  public boolean isConfirmedComplete() {
+    return confirmedComplete;
+  }
+
+  public void setConfirmedComplete(boolean confirmedComplete) {
+    this.confirmedComplete = confirmedComplete;
   }
 }

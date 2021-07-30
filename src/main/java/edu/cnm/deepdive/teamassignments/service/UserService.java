@@ -26,7 +26,7 @@ public class UserService implements Converter <Jwt, UsernamePasswordAuthenticati
     return repository.findFirstByOauthKey(oauthKey)
         .map((user) -> {
           user.setConnected(new Date());
-          return repository.save(user);
+           return repository.save(user);
         })
         .orElseGet(() -> {
           User user = new User();
@@ -35,8 +35,13 @@ public class UserService implements Converter <Jwt, UsernamePasswordAuthenticati
           user.setConnected(new Date());
           return repository.save(user);
         });
-
   }
+
+  public User save(User user) {
+    return repository.save(user);   //TODO review with team
+  }
+
+
 
   @Override
   public UsernamePasswordAuthenticationToken convert(Jwt jwt) {

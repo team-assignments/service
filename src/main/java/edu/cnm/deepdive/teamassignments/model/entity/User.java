@@ -66,6 +66,7 @@ public class User {
   @JsonIgnore
   private final List<Group> groups = new LinkedList<>();
 
+
   @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @OrderBy("name ASC")
   @NonNull

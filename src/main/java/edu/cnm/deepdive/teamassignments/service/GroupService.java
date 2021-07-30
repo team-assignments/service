@@ -19,10 +19,20 @@ public class GroupService {
     this.repository = repository;
   }
 
-  public Group save(Group group, User user) {
+  public final Group save(Group group, User user) {
     group.setOwner(user);
+    group.getUsers().add(user);
     return repository.save(group);
   }
+
+  public final Group save(Group group) {
+    return repository.save(group);
+  }
+
+  public Group addMember(Group group, User member) {
+      group.getUsers().add(member);
+      return repository.save(group);
+        }
 
   public Optional<Group> get(long id, User user) {
 
