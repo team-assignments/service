@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -21,11 +20,8 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Null;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 
 
 @Entity
@@ -54,13 +50,9 @@ public class Group {
   @OrderBy ("postDate DESC")
   private final List<Task> tasks = new LinkedList<>();
 
-  @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
-  @JoinTable(
-      name = "user_group",
-      joinColumns = @JoinColumn(name = "group_id", nullable = false, updatable = false),
-      inverseJoinColumns = @JoinColumn(name = "user_id", nullable = false, updatable = false)
-  )
+  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "groups")
   @OrderBy("displayName ASC")
+
   private final Set<User> users = new LinkedHashSet<>();
 
 

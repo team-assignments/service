@@ -8,22 +8,40 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Task service class
+ */
 @Service
 public class TaskService {
 
   private final TaskRepository repository;
 
+  /**
+   * Taks service repository.
+   * @param repository
+   */
   @Autowired
   public TaskService(TaskRepository repository) {
     this.repository = repository;
   }
 
+  /**
+   * Save a new task.
+   * @param task
+   * @param user
+   * @return
+   */
   public Task save(Task task, User user) {
     task.setUser(user);
     return repository.save(task);
   }
 
 
+  /**
+   * Look up tasks for a given user.
+   * @param id
+   * @return
+   */
   public Optional<Task> get(long id) {   //TODO review with team
     return repository.findById(id)
         .map((task) -> {
@@ -35,6 +53,11 @@ public class TaskService {
         });
   }
 
+  /**
+   * Mark a task as completed.
+   * @param id
+   * @param user
+   */
   public void completed(long id, User user) {   //TODO review with team
 
     repository.findById(id)
@@ -53,6 +76,12 @@ public class TaskService {
   }
 
 
+  /**
+   * Delete a task
+   * @param id
+   * @param user
+   * @param group
+   */
   public void delete(long id, User user, Group group) {
 
     repository.findById(id)

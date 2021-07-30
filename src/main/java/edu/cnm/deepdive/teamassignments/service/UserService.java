@@ -13,16 +13,29 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
+/**
+ * User service class.
+ */
 @Service
 public class UserService implements Converter <Jwt, UsernamePasswordAuthenticationToken> {
 
   private final UserRepository repository;
 
+  /**
+   * User service repository.
+   * @param repository
+   */
   @Autowired
   public UserService(UserRepository repository) {
     this.repository = repository;
   }
 
+  /**
+   * Get or create users.
+   * @param oauthKey
+   * @param displayName
+   * @return
+   */
   public User getOrCreate(String oauthKey, String displayName) {
     return repository.findFirstByOauthKey(oauthKey)
         .map((user) -> {
@@ -38,6 +51,11 @@ public class UserService implements Converter <Jwt, UsernamePasswordAuthenticati
         });
   }
 
+  /**
+   * Save user to database.
+   * @param user
+   * @return
+   */
   public User save(User user) {
     return repository.save(user);   //TODO review with team
   }
@@ -46,6 +64,11 @@ public class UserService implements Converter <Jwt, UsernamePasswordAuthenticati
     return repository.findById(id);
   }
 
+  /**
+   * Get or create authentication token for user.
+   * @param jwt
+   * @return
+   */
   @Override
   public UsernamePasswordAuthenticationToken convert(Jwt jwt) {
     Collection<SimpleGrantedAuthority> grants = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));

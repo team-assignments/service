@@ -9,6 +9,9 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Group Service class.
+ */
 @Service
 public class GroupService {
 
@@ -16,6 +19,11 @@ public class GroupService {
 
   private final GroupRepository repository;
 
+  /**
+   * Constructor for Group service.
+   * @param userService
+   * @param repository
+   */
   @Autowired
   public GroupService(UserService userService,
       GroupRepository repository) {
@@ -23,6 +31,12 @@ public class GroupService {
     this.repository = repository;
   }
 
+  /**
+   * Save a new group and set creator to group owner.
+   * @param group
+   * @param user
+   * @return
+   */
   public final Group save(Group group, User user) {
     user = userService.get(user.getId()).orElseThrow();
     group.setOwner(user);
@@ -30,10 +44,23 @@ public class GroupService {
     return repository.save(group);
   }
 
+  /**
+   * Basic group save method
+   * @param group
+   * @return
+   */
   public final Group save(Group group) {
     return repository.save(group);
   }
 
+  /**
+   * Allows group owners to add or remove members to or from an existing group.
+   * @param groupId
+   * @param userId
+   * @param putInGroup
+   * @param owner
+   * @return
+   */
   public Boolean toggleMembership(long groupId, long userId, boolean putInGroup, User owner) {
     return repository
         .findById(groupId)
@@ -58,6 +85,13 @@ public class GroupService {
         .orElseThrow();
   }
 
+  /**
+   * Check to see if a user is a member of a group.
+   * @param groupId
+   * @param userId
+   * @param requestor
+   * @return
+   */
   public boolean checkMembership(long groupId, long userId, User requestor) {
     return repository
         .findById(groupId)
@@ -70,6 +104,13 @@ public class GroupService {
             .orElseThrow())
         .orElseThrow();
   }
+
+  /**
+   * Gets all members of a group.
+   * @param id
+   * @param user
+   * @return
+   */
   public Optional<Group> get(long id, User user) {
 
     return repository.findById(id)
@@ -85,6 +126,13 @@ public class GroupService {
 
   }
 
+  /**
+   * Allows a group to be renamed.
+   * @param id
+   * @param name
+   * @param user
+   * @return
+   */
   public Optional<Group> rename(long id, String name, User user) {
 
     return repository.findById(id)
@@ -102,6 +150,11 @@ public class GroupService {
 
   }
 
+  /**
+   * Allows a group to be deleted.
+   * @param id
+   * @param user
+   */
   public void delete(long id, User user) {
 
     repository.findById(id)
