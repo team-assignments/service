@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -50,9 +51,13 @@ public class Group {
   @OrderBy ("postDate DESC")
   private final List<Task> tasks = new LinkedList<>();
 
-  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "groups")
+  @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+  @JoinTable(
+      name = "user_group_relationship",
+      joinColumns = @JoinColumn(name = "group_id", nullable = false, updatable = false),
+      inverseJoinColumns = @JoinColumn(name = "user_id", nullable = false, updatable = false)
+  )
   @OrderBy("displayName ASC")
-
   private final Set<User> users = new LinkedHashSet<>();
 
 
