@@ -16,7 +16,7 @@
   <artifactId>team-assignments-service</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>team-assignments-service</name>
-  <description> "Lists assignments that need to be completed by a group, and allows members to claim them." </description>
+  <description> Lists assignments that need to be completed by a group, and allows members to claim them. </description>
 
   <properties>
     <java.version>11</java.version>
