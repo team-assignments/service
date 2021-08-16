@@ -4,6 +4,7 @@ import edu.cnm.deepdive.teamassignments.model.dao.GroupRepository;
 import edu.cnm.deepdive.teamassignments.model.entity.Group;
 import edu.cnm.deepdive.teamassignments.model.entity.User;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,10 @@ public class GroupService {
     group.setOwner(user);
     group.getUsers().add(user);
     return repository.save(group);
+  }
+
+  public final List<Group> getGroups(){
+    return repository.findAllOrderByNameAsc();
   }
 
   /**

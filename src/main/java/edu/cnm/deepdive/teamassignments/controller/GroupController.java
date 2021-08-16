@@ -3,6 +3,7 @@ package edu.cnm.deepdive.teamassignments.controller;
 import edu.cnm.deepdive.teamassignments.model.entity.Group;
 import edu.cnm.deepdive.teamassignments.model.entity.User;
 import edu.cnm.deepdive.teamassignments.service.GroupService;
+import java.util.List;
 import java.util.function.Function;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -73,7 +74,7 @@ public class GroupController {
    * @return
    */
   @GetMapping(value = "/{groupId:\\d+}/members/{userId:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public boolean putMembership(@PathVariable long groupId, @PathVariable long userId, Authentication auth) {
+  public boolean getMembership(@PathVariable long groupId, @PathVariable long userId, Authentication auth) {
 
     return service.checkMembership(groupId, userId, (User) auth.getPrincipal());
 
@@ -106,7 +107,12 @@ public class GroupController {
     return service.rename(id, name, (User) auth.getPrincipal())
         .map(Group::getName)
         .orElseThrow();
+  }
 
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public Iterable<Group> getGroups(Authentication auth) {
+
+    return service.getGroups();
 
   }
 
