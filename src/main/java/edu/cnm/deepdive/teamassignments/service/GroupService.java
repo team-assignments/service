@@ -45,8 +45,8 @@ public class GroupService {
     return repository.save(group);
   }
 
-  public final List<Group> getGroups(){
-    return repository.findAllOrderByNameAsc();
+  public final Iterable<Group> getGroups(){
+    return repository.getAllByOrderByName();
   }
 
   /**

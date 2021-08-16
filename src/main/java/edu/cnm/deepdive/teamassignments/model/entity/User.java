@@ -30,10 +30,7 @@ import org.springframework.lang.NonNull;
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(
-    name = "user_profile",
-    indexes = {
-        @Index(columnList = "displayName", unique = true)
-    }
+    name = "user_profile"
 )
 public class User {
 
@@ -72,7 +69,7 @@ public class User {
   @JsonIgnore
   private final List<Group> ownedGroups = new LinkedList<>();
 
-  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @OrderBy("dueDate desc")
   @NonNull
   private final List<Task> tasks = new LinkedList<>();

@@ -2,6 +2,7 @@ package edu.cnm.deepdive.teamassignments.model.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,7 +39,9 @@ public class Task {
   private Date dueDate;
 
   @ManyToOne(fetch = FetchType.LAZY, optional = true)
-  @JoinColumn(name = "user_id")    //investigate if assignment will happen immediately on creation, if so nullable = false. If chagne user updateable = false.
+  @JoinColumn(name = "user_id")
+  @JsonIgnore
+//investigate if assignment will happen immediately on creation, if so nullable = false. If chagne user updateable = false.
   private User user;
 
 
