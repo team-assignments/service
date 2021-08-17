@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -131,6 +132,28 @@ public class Group {
   @NonNull
   public Set<User> getUsers() {
     return users;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(id);
+  }
+
+  /**
+   * Override .equals for User.
+   * @param obj
+   * @return
+   */
+  @Override
+  public boolean equals(Object obj) {
+    boolean matches = false;
+    if(this == obj) {
+      matches = true;
+    } else if(obj instanceof Group){
+      Group other = (Group) obj;
+      matches = (id != null && id.equals(other.id));
+    }
+    return matches;
   }
 
 

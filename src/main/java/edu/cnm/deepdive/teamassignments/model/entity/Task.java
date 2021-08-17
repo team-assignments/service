@@ -4,6 +4,7 @@ package edu.cnm.deepdive.teamassignments.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -22,6 +23,8 @@ import org.springframework.lang.NonNull;
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 public class Task {
+
+  //todo add name field
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,6 +51,7 @@ public class Task {
   @NonNull
   @ManyToOne(fetch = FetchType.EAGER, optional = false)
   @JoinColumn(name = "group_id", nullable = false, updatable = false)
+  @JsonIgnore
   private Group group;
 
   @Column(nullable = false, updatable = true)
@@ -114,10 +118,10 @@ public class Task {
 
   /**
    * setter for group.
-   * @param groupId
+   * @param group
    */
-  public void setGroup(Group groupId) {
-    this.group = groupId;
+  public void setGroup(Group group) {
+    this.group = group;
   }
 
   /**
@@ -151,4 +155,27 @@ public class Task {
   public void setConfirmedComplete(boolean confirmedComplete) {
     this.confirmedComplete = confirmedComplete;
   }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(id);
+  }
+
+  /**
+   * Override .equals for User.
+   * @param obj
+   * @return
+   */
+  @Override
+  public boolean equals(Object obj) {
+    boolean matches = false;
+    if(this == obj) {
+      matches = true;
+    } else if(obj instanceof Task){
+      Task other = (Task) obj;
+      matches = (id != null && id.equals(other.id));
+    }
+    return matches;
+  }
+
 }
