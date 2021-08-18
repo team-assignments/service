@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -110,9 +111,9 @@ public class GroupController {
   }
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<Group> getGroups(Authentication auth) {
+  public Iterable<Group> getGroups(@RequestParam(required = false, defaultValue = "false") boolean ownedOnly, Authentication auth) {
 
-    return service.getGroups();
+    return service.getGroups(ownedOnly, (User) auth.getPrincipal());
 
   }
 

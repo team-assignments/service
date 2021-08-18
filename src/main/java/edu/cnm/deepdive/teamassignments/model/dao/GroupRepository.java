@@ -13,9 +13,12 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
   Iterable<Group> getAllByOrderByName();
 
- // List<Group> findAllByUsersContainingAndInvitedOrderByCreationDateAsc(User user, Group group);
+  Iterable<Group> findAllByOwnerOrUsersContainsOrderByNameAsc(User owner, User member);
 
- // List<Group> findAllByOwnerContainingAndInvitedOrderByIdAsc(User owner, boolean invited);
+
+  // List<Group> findAllByUsersContainingAndInvitedOrderByCreationDateAsc(User user, Group group);
+
+  // List<Group> findAllByOwnerContainingAndInvitedOrderByIdAsc(User owner, boolean invited);
 
 
 }
