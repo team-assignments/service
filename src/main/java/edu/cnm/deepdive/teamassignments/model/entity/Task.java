@@ -60,6 +60,13 @@ public class Task {
   @Column(nullable = false, updatable = true)
   private boolean confirmedComplete;
 
+  @NonNull
+  @Column(nullable = false, length = 100)
+  private String title;
+
+  @Column(length = 1024)
+  private String description;
+
   /**
    * getter for id.
    * @return
@@ -154,6 +161,23 @@ public class Task {
    */
   public void setConfirmedComplete(boolean confirmedComplete) {
     this.confirmedComplete = confirmedComplete;
+  }
+
+  @NonNull
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(@NonNull String title) {
+    this.title = title;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
   }
 
   @Override
