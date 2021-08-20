@@ -60,4 +60,10 @@ public class TaskController {
         .isAssigned(groupId, taskId, memberId, (User) auth.getPrincipal())
         .orElseThrow();
   }
+
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public Iterable<Task> getAll(@PathVariable long groupId, Authentication auth) {
+    return service.getTasks(groupId, (User) auth.getPrincipal());
+  }
+
 }

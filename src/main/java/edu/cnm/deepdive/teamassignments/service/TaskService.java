@@ -184,5 +184,15 @@ public class TaskService {
 
   }
 
+  public Iterable<Task> getTasks(long groupId, User user) {
+    return groupRepository
+        .findById(groupId)
+        .map((group) -> group.getOwner().equals(user) || user.getGroups().contains(group)
+            ? group
+            : null
+        )
+        .map(Group::getTasks)
+        .orElseThrow();
+  }
 
 }
