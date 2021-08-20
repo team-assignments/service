@@ -21,10 +21,7 @@ public class UserService implements Converter <Jwt, UsernamePasswordAuthenticati
 
   private final UserRepository repository;
 
-  /**
-   * User service repository.
-   * @param repository
-   */
+
   @Autowired
   public UserService(UserRepository repository) {
     this.repository = repository;

@@ -35,16 +35,33 @@ public class TaskController {
   }
 
 
+  /**
+   *
+   * @param task
+   * @param groupId
+   * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
+   * @return
+   */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public Task post(@RequestBody Task task, @PathVariable long groupId, Authentication auth) {
 
     return service
         .save(task, (User) auth.getPrincipal(), groupId)
         .orElseThrow();
+
     //TODO return a response entity for a created resource
 
   }
 
+  /**
+   *
+   * @param assigned
+   * @param groupId
+   * @param taskId
+   * @param memberId
+   * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
+   * @return
+   */
   @PutMapping(value ="/{taskId}/members/{memberId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public boolean assign(@RequestBody boolean assigned, @PathVariable long groupId, @PathVariable long taskId, @PathVariable long memberId, Authentication auth) {
 
@@ -53,6 +70,14 @@ public class TaskController {
         .orElseThrow();
   }
 
+  /**
+   *
+   * @param groupId
+   * @param taskId
+   * @param memberId
+   * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
+   * @return
+   */
   @GetMapping(value ="/{taskId}/members/{memberId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public boolean isAssigned( @PathVariable long groupId, @PathVariable long taskId, @PathVariable long memberId, Authentication auth) {
 
@@ -61,6 +86,12 @@ public class TaskController {
         .orElseThrow();
   }
 
+  /**
+   *
+   * @param groupId
+   * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
+   * @return
+   */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public Iterable<Task> getAll(@PathVariable long groupId, Authentication auth) {
     return service.getTasks(groupId, (User) auth.getPrincipal());

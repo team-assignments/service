@@ -32,7 +32,7 @@ public class UserController {
 
   /**
    * get mapping for user.
-   * @param auth
+   * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
    * @return
    */
   @GetMapping(value = "/me", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -43,7 +43,7 @@ public class UserController {
   /**
    * post mapping for user.
    * @param user
-   * @param auth
+   * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
    * @return
    */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE) //TODO review with team

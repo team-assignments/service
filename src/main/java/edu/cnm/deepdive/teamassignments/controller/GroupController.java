@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * controller for group.
+ * controller for group with Spring annotation mapping.
  */
 @RestController
 @RequestMapping("/groups")
@@ -30,17 +30,17 @@ public class GroupController {
   private final GroupService service;
 
   /**
-   * constructor for group
-   * @param service
+   * Constructor for group.
+   * @param service - GroupService class.
    */
   public GroupController(GroupService service) {
     this.service = service;
   }
 
   /**
-   * Post mapping for group.
-   * @param group
-   * @param auth
+   * Post mapping for adding a group.
+   * @param group group object from group entity class.
+   * @param auth  token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
    * @return
    */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -71,7 +71,7 @@ public class GroupController {
    * put mapping for checking membership.
    * @param groupId
    * @param userId
-   * @param auth
+   * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
    * @return
    */
   @GetMapping(value = "/{groupId:\\d+}/members/{userId:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -85,7 +85,7 @@ public class GroupController {
   /**
    * get mapping for group.
    * @param id
-   * @param auth
+   * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
    * @return
    */
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -99,7 +99,7 @@ public class GroupController {
    * put mapping for renaming group.
    * @param id
    * @param name
-   * @param auth
+   * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
    * @return
    */
   @PutMapping(value = "/{id:\\d+}/name", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -121,7 +121,7 @@ public class GroupController {
   /**
    * delete mapping for group.
    * @param id
-   * @param auth
+   * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
    */
   @DeleteMapping(value = "/{id:\\d+}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
