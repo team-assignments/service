@@ -22,6 +22,7 @@ public class GroupService {
 
   /**
    * Constructor for Group service.
+   *
    * @param userService
    * @param repository
    */
@@ -34,6 +35,7 @@ public class GroupService {
 
   /**
    * Save a new group and set creator to group owner.
+   *
    * @param group
    * @param user
    * @return
@@ -45,12 +47,15 @@ public class GroupService {
     return repository.save(group);
   }
 
-  public final Iterable<Group> getGroups(){
-    return repository.getAllByOrderByName();
+  public final Iterable<Group> getGroups(boolean ownedOnly, User user) {
+    return ownedOnly
+        ? repository.findAllByOwnerOrderByNameAsc(user)
+        : repository.findAllByOwnerOrUsersContainsOrderByNameAsc(user, user);
   }
 
   /**
    * Basic group save method
+   *
    * @param group
    * @return
    */
@@ -60,6 +65,7 @@ public class GroupService {
 
   /**
    * Allows group owners to add or remove members to or from an existing group.
+   *
    * @param groupId
    * @param userId
    * @param putInGroup
@@ -77,7 +83,7 @@ public class GroupService {
               boolean found = users.contains(user);
               if (putInGroup && !found) {
                 users.add(user);
-              } else if(!putInGroup && found) {
+              } else if (!putInGroup && found) {
                 group.getUsers().remove(user);
               }
               return group;
@@ -92,6 +98,7 @@ public class GroupService {
 
   /**
    * Check to see if a user is a member of a group.
+   *
    * @param groupId
    * @param userId
    * @param requestor
@@ -112,6 +119,7 @@ public class GroupService {
 
   /**
    * Gets all members of a group.
+   *
    * @param id
    * @param user
    * @return
@@ -133,6 +141,7 @@ public class GroupService {
 
   /**
    * Allows a group to be renamed.
+   *
    * @param id
    * @param name
    * @param user
@@ -157,6 +166,7 @@ public class GroupService {
 
   /**
    * Allows a group to be deleted.
+   *
    * @param id
    * @param user
    */

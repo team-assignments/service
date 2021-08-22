@@ -21,10 +21,7 @@ public class UserService implements Converter <Jwt, UsernamePasswordAuthenticati
 
   private final UserRepository repository;
 
-  /**
-   * User service repository.
-   * @param repository
-   */
+
   @Autowired
   public UserService(UserRepository repository) {
     this.repository = repository;
@@ -36,7 +33,7 @@ public class UserService implements Converter <Jwt, UsernamePasswordAuthenticati
    * @param displayName
    * @return
    */
-  public User getOrCreate(String oauthKey, String displayName) {
+  public synchronized User getOrCreate(String oauthKey, String displayName) {
     return repository.findFirstByOauthKey(oauthKey)
         .map((user) -> {
           user.setConnected(new Date());

@@ -20,8 +20,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
   Iterable<Task> findAllByUserAndCompletedAndDueDateBetweenOrderByDueDateAsc(User user, boolean completed, Date cutoffStart, Date cutoffEnd);
 
-  
-
   Iterable<Task> findAllByGroupAndCompletedAndConfirmedCompleteIsFalseOrderByDueDate(Group group, boolean completed);
 
   Iterable<Task> findAllByGroupAndCompletedIsFalseAndDueDateBeforeOrderByDueDateAsc(Group group, Date cutoff);

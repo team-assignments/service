@@ -53,6 +53,7 @@ public class User {
   private Date creationDate;
 
   @NonNull
+  @JsonIgnore
   @Column(nullable = false, updatable = false, unique = true)
   private String oauthKey;
 
@@ -74,119 +75,77 @@ public class User {
   @NonNull
   private final List<Task> tasks = new LinkedList<>();
 
-  /**
-   * getter for user id.
-   * @return
-   */
+
   public Long getId() {
     return id;
   }
 
-  /**
-   * setter for user id.
-   * @param id
-   */
+
   public void setId(Long id) {
     this.id = id;
   }
 
-  /**
-   * getter for connected.
-   * @return
-   */
+
   @NonNull
   public Date getConnected() {
     return connected;
   }
 
-  /**
-   * setter for connected
-   * @param connected
-   */
+
   public void setConnected(@NonNull Date connected) {
     this.connected = connected;
   }
 
-  /**
-   * getter for displayName.
-   * @return
-   */
+
   public String getDisplayName() {
     return displayName;
   }
 
-  /**
-   * setter for displayName.
-   * @param displayName
-   */
+
   public void setDisplayName(String displayName) {
     this.displayName = displayName;
   }
 
-  /**
-   * getter for creationDate.
-   * @return
-   */
+
   public Date getCreationDate() {
     return creationDate;
   }
 
-  /**
-   * setter for creationDate.
-   * @param creationDate
-   */
+
   public void setCreationDate(Date creationDate) {
     this.creationDate = creationDate;
   }
 
-  /**
-   * getter for oauthKey.
-   * @return
-   */
+
   @NonNull
   public String getOauthKey() {
     return oauthKey;
   }
 
-  /**
-   * setter for oauthKey.
-   * @param oauthKey
-   */
+
   public void setOauthKey(@NonNull String oauthKey) {
     this.oauthKey = oauthKey;
   }
 
-  /**
-   * getter for groups.
-   * @return
-   */
+
   @NonNull
   public List<Group> getGroups() {
     return groups;
   }
 
-  /**
-   * getter for ownedGroups.
-   * @return
-   */
+
   @NonNull
   public List<Group> getOwnedGroups() {
     return ownedGroups;
   }
 
-  /**
-   * getter for tasks.
-   * @return
-   */
+
   @NonNull
   public List<Task> getTasks() {
     return tasks;
   }
 
-  /**
-   * Override hashCode for User.
-   * @return
-   */
+
   @Override
   public int hashCode() {
     return Objects.hashCode(id);
