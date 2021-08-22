@@ -58,7 +58,6 @@ public class Task {
   @ManyToOne(fetch = FetchType.LAZY, optional = true)
   @JoinColumn(name = "user_id")
   @JsonIgnore
-//investigate if assignment will happen immediately on creation, if so nullable = false. If chagne user updateable = false.
   private User user;
 
   /**

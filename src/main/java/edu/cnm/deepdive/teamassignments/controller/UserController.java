@@ -3,8 +3,11 @@ package edu.cnm.deepdive.teamassignments.controller;
 import edu.cnm.deepdive.teamassignments.model.entity.Group;
 import edu.cnm.deepdive.teamassignments.model.entity.User;
 import edu.cnm.deepdive.teamassignments.service.UserService;
+import java.net.URI;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +30,7 @@ public class UserController {
   }
 
   /**
-   * get mapping for User object.
+   * get mapping for the User making the request.
    * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
    * @return User object casted from auth token.
    */
@@ -42,10 +45,20 @@ public class UserController {
    * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
    * @return User object via Json.
    */
-  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE) //TODO review with team
-  public User post(@RequestBody User user, Authentication auth) {
+  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<User> post(@RequestBody User user, Authentication auth) {
 
-    return userService.save((User) auth.getPrincipal());
+    user = userService.save((User) auth.getPrincipal());
+
+    URI location = WebMvcLinkBuilder
+        .linkTo(
+            WebMvcLinkBuilder
+                .methodOn(UserController.class)
+                .me(auth)
+        )
+        .toUri();
+
+    return ResponseEntity.created(location).body(user);
   }
 
   //TODO no put mapping, dont know if it makes sense to add.

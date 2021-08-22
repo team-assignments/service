@@ -67,10 +67,10 @@ public class TaskService {
    * @param id
    * @return
    */
-  public Optional<Task> get(long id) {   //TODO review with team
+  public Optional<Task> get(long id, long groupId, User user) {   //TODO review with team
     return taskRepository.findById(id)
         .map((task) -> {
-          if (task.getUser().getId().equals(task.getId())) {
+          if (task.getId().equals(id) && task.getUser().equals(user) && task.getGroup().getId().equals(groupId)) {
             return task;
           } else {
             return null;
