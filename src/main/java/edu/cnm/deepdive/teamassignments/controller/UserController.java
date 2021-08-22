@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * User controller
+ *
  */
 @RestController
 @RequestMapping("users")
@@ -21,19 +21,15 @@ public class UserController {
 
   private final UserService userService;
 
-  /**
-   * User controller constructor.
-   * @param userService
-   */
   @Autowired
   public UserController(UserService userService) {
     this.userService = userService;
   }
 
   /**
-   * get mapping for user.
+   * get mapping for User object.
    * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
-   * @return
+   * @return User object casted from auth token.
    */
   @GetMapping(value = "/me", produces = MediaType.APPLICATION_JSON_VALUE)
   public User me(Authentication auth) {
@@ -41,10 +37,10 @@ public class UserController {
   }
 
   /**
-   * post mapping for user.
-   * @param user
+   * Post mapping for User object.
+   * @param user User object from user entity class.
    * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
-   * @return
+   * @return User object via Json.
    */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE) //TODO review with team
   public User post(@RequestBody User user, Authentication auth) {

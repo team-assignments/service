@@ -31,7 +31,7 @@ public class GroupController {
 
   /**
    * Constructor for group.
-   * @param service - GroupService class.
+   * @param service - GroupService class, used for repository work.
    */
   public GroupController(GroupService service) {
     this.service = service;
@@ -41,7 +41,7 @@ public class GroupController {
    * Post mapping for adding a group.
    * @param group group object from group entity class.
    * @param auth  token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
-   * @return
+   * @return provides new group object via Json.
    */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public Group post(@RequestBody Group group, Authentication auth) {
@@ -52,11 +52,11 @@ public class GroupController {
 
   /**
    * Put mapping for membership.
-   * @param groupId
-   * @param userId
-   * @param inGroup
-   * @param auth
-   * @return
+   * @param groupId path variable for group id
+   * @param userId path variable for user id
+   * @param inGroup boolean valuable used to verify if individual is in group that is added to body of request.
+   * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
+   * @return provides boolean value verifying group membership.
    */
   @PutMapping(value = "/{groupId:\\d+}/members/{userId:\\d+}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public boolean putMembership(@PathVariable long groupId, @PathVariable long userId,
@@ -68,11 +68,11 @@ public class GroupController {
   }
 
   /**
-   * put mapping for checking membership.
-   * @param groupId
-   * @param userId
+   * get mapping for checking membership.
+   * @param groupId path variable for group id
+   * @param userId path variable for user id
    * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
-   * @return
+   * @return provides userId boolean value via JSON.
    */
   @GetMapping(value = "/{groupId:\\d+}/members/{userId:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
   public boolean getMembership(@PathVariable long groupId, @PathVariable long userId, Authentication auth) {
@@ -84,9 +84,9 @@ public class GroupController {
 
   /**
    * get mapping for group.
-   * @param id
+   * @param id group id.
    * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
-   * @return
+   * @return provides Group object via JSON.
    */
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Group get(@PathVariable long id, Authentication auth) {
@@ -97,10 +97,10 @@ public class GroupController {
 
   /**
    * put mapping for renaming group.
-   * @param id
-   * @param name
+   * @param id parent group id.
+   * @param name String value in body used to update name.
    * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
-   * @return
+   * @return provides String object via Json.
    */
   @PutMapping(value = "/{id:\\d+}/name", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public String replaceName(@PathVariable long id, @RequestBody String name, Authentication auth) {
@@ -110,6 +110,12 @@ public class GroupController {
         .orElseThrow();
   }
 
+  /**
+   *
+   * @param ownedOnly Iterable list for owned groups.
+   * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
+   * @return Group Iterable via Json.
+   */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public Iterable<Group> getGroups(@RequestParam(required = false, defaultValue = "false") boolean ownedOnly, Authentication auth) {
 
@@ -120,7 +126,7 @@ public class GroupController {
 
   /**
    * delete mapping for group.
-   * @param id
+   * @param id group id to delete.
    * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
    */
   @DeleteMapping(value = "/{id:\\d+}")

@@ -53,6 +53,7 @@ public class User {
   private Date creationDate;
 
   @NonNull
+  @JsonIgnore
   @Column(nullable = false, updatable = false, unique = true)
   private String oauthKey;
 

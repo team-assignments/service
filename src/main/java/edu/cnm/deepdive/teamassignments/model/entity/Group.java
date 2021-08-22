@@ -25,33 +25,52 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.lang.NonNull;
 
-
+/**
+ * Entity class for Group object using JPA mapping.
+ */
 @Entity
 @Table(name = "group_team")
 public class Group {
 
+  /**
+   * Long object used to identify the group.
+   */
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
   @Column(name = "group_id",nullable = false,updatable = false)
   private Long id;
 
+  /**
+   * Foreign key identifying owner of group with user id.
+   */
   @ManyToOne(fetch = FetchType.EAGER, optional = false)
   @JoinColumn(name = "owner_id", nullable = false, updatable = false)
   private User owner;
 
+  /**
+   * Timestamp Date object verifying group creation date.
+   */
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column(nullable = false, updatable = false)
   private Date creationDate;
 
+  /**
+   * String object providing group name.
+   */
   @Column(nullable = false, updatable = true, unique = true)
   private String name;
 
-
+  /**
+   * Linked list of tasks for specified group.
+   */
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
   @OrderBy ("postDate DESC")
   private final List<Task> tasks = new LinkedList<>();
 
+  /**
+   * Many to many relationship mapping between Users and Groups.
+   */
   @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinTable(
       name = "user_group_relationship",
@@ -68,67 +87,37 @@ public class Group {
 //  @Nullable
 //  private final List<User> invitedUsers = new LinkedList<>();
 
-  /**
-   * getter for id.
-   * @return
-   */
+
   public Long getId() {
     return id;
   }
 
-  /**
-   * getter for creationDate.
-   * @return
-   */
   public Date getCreationDate() {
     return creationDate;
   }
 
-  /**
-   * getter for owner.
-   * @return
-   */
+
   public User getOwner() {
     return owner;
   }
 
-  /**
-   * setter for owner.
-   * @param owner
-   */
   public void setOwner(User owner) {
     this.owner = owner;
   }
 
-  /**
-   * getter for name.
-   * @return
-   */
   public String getName() {
     return name;
   }
 
-  /**
-   * setter for name.
-   * @param name
-   */
   public void setName(String name) {
     this.name = name;
   }
 
-  /**
-   * getter for list tasks.
-   * @return
-   */
   @NonNull
   public List<Task> getTasks() {
     return tasks;
   }
 
-  /**
-   * getter for users.
-   * @return
-   */
   @NonNull
   public Set<User> getUsers() {
     return users;
@@ -139,11 +128,6 @@ public class Group {
     return Objects.hashCode(id);
   }
 
-  /**
-   * Override .equals for User.
-   * @param obj
-   * @return
-   */
   @Override
   public boolean equals(Object obj) {
     boolean matches = false;
