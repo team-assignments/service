@@ -189,23 +189,43 @@ public class Task {
     this.confirmedComplete = confirmedComplete;
   }
 
+  /**
+   * Gets the title of the task
+   * @return the title in String format
+   */
   @NonNull
   public String getTitle() {
     return title;
   }
 
+  /**
+   * Sets the title of the task
+   * @param title of task in String format
+   */
   public void setTitle(@NonNull String title) {
     this.title = title;
   }
 
+  /**
+   * Gets the description of the task
+   * @return description of task
+   */
   public String getDescription() {
     return description;
   }
 
+  /**
+   * Sets the description of the task
+   * @param description of task in String format
+   */
   public void setDescription(String description) {
     this.description = description;
   }
 
+  /**
+   * The hashcode to verify identity
+   * @return id of hashcode
+   */
   @Override
   public int hashCode() {
     return Objects.hashCode(id);
@@ -213,8 +233,8 @@ public class Task {
 
   /**
    * Override .equals for User.
-   * @param obj
-   * @return
+   * @param obj the root of the class
+   * @return the task if it matches requested task
    */
   @Override
   public boolean equals(Object obj) {
