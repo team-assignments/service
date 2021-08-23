@@ -34,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   /**
    * user service security configuration.
-   * @param userService
+   * @param userService implements JWT to accessed after verification of user's username and password
    */
   public SecurityConfiguration(UserService userService) {
     this.userService = userService;
@@ -49,8 +49,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   }
 
   /**
-   * Jwt Decoder.
-   * @return
+   * Extends Jwt Decoder functional interface.
+   * @return decoder from spring framework security
    */
  @Bean
   public JwtDecoder jwtDecoder() {
