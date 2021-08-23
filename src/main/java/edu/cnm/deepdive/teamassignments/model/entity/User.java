@@ -73,6 +73,7 @@ public class User {
   @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @OrderBy("dueDate desc")
   @NonNull
+  @JsonIgnore
   private final List<Task> tasks = new LinkedList<>();
 
 

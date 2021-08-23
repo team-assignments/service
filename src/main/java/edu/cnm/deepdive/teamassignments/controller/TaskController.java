@@ -64,15 +64,23 @@ public class TaskController {
   }
 
 
+
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Task get(@PathVariable long id, Authentication auth, @PathVariable long groupId) {
+    return service
+        .get(id, groupId, (User) auth.getPrincipal())
+        .orElseThrow();
+
+    // (id, (User) auth.getPrincipal()).orElseThrow();
+  }
+
+/*  @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Optional<Task> get(@PathVariable long id, Authentication auth, @PathVariable long groupId) {
 
 
     return service.get(id, groupId, (User) auth.getPrincipal());
 
-        // (id, (User) auth.getPrincipal()).orElseThrow();
-
-  }
+  }*/
 
   /**
    *

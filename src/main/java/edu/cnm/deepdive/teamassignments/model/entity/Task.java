@@ -27,7 +27,6 @@ import org.springframework.lang.NonNull;
 @Entity
 public class Task {
 
-  //todo add name field
 
   /**
    * Long object used to identify the task.

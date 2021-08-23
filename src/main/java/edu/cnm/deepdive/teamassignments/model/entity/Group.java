@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.teamassignments.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -66,6 +67,7 @@ public class Group {
    */
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
   @OrderBy ("postDate DESC")
+  @JsonIgnore
   private final List<Task> tasks = new LinkedList<>();
 
   /**
@@ -78,6 +80,7 @@ public class Group {
       inverseJoinColumns = @JoinColumn(name = "user_id", nullable = false, updatable = false)
   )
   @OrderBy("displayName ASC")
+  @JsonIgnore
   private final Set<User> users = new LinkedHashSet<>();
 
 
