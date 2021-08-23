@@ -73,79 +73,122 @@ public class User {
   @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @OrderBy("dueDate desc")
   @NonNull
+  @JsonIgnore
   private final List<Task> tasks = new LinkedList<>();
 
-
+  /**
+   * gets the id of the task
+   * @return long id of the task
+   */
   public Long getId() {
     return id;
   }
 
-
+  /**
+   * sets teh id of the task
+   * @param id of task in long
+   */
   public void setId(Long id) {
     this.id = id;
   }
 
-
+  /**
+   * Get the date user connected to server
+   * @return date user connected to server
+   */
   @NonNull
   public Date getConnected() {
     return connected;
   }
 
-
+  /**
+   * Sets the Date user connected
+   * @param connected is date user accessed server
+   */
   public void setConnected(@NonNull Date connected) {
     this.connected = connected;
   }
 
-
+  /**
+   * Gets the display name of user
+   * @return display name of user
+   */
   public String getDisplayName() {
     return displayName;
   }
 
-
+  /**
+   * Sets the dispaly name of user
+   * @param displayName of user
+   */
   public void setDisplayName(String displayName) {
     this.displayName = displayName;
   }
 
-
+  /**
+   * Gets the Date item was created
+   * @return the creation date
+   */
   public Date getCreationDate() {
     return creationDate;
   }
 
-
+  /**
+   * Sets the Date created
+   * @param creationDate for created item
+   */
   public void setCreationDate(Date creationDate) {
     this.creationDate = creationDate;
   }
 
-
+  /**
+   * Gets users oauth key
+   * @return users ouath key
+   */
   @NonNull
   public String getOauthKey() {
     return oauthKey;
   }
 
-
+  /**
+   * Sets the oauth key
+   * @param oauthKey of user
+   */
   public void setOauthKey(@NonNull String oauthKey) {
     this.oauthKey = oauthKey;
   }
 
-
+  /**
+   * Gets a list of groups
+   * @return groups
+   */
   @NonNull
   public List<Group> getGroups() {
     return groups;
   }
 
-
+  /**
+   * Gets a list of Group
+   * @return owned groups
+   */
   @NonNull
   public List<Group> getOwnedGroups() {
     return ownedGroups;
   }
 
-
+  /**
+   * Gets a list of task
+   * @return list of tasks
+   */
   @NonNull
   public List<Task> getTasks() {
     return tasks;
   }
 
-
+  /**
+   * Gets the hash code needed to verify user
+   * @return hash code id
+   */
   @Override
   public int hashCode() {
     return Objects.hashCode(id);
@@ -153,8 +196,8 @@ public class User {
 
   /**
    * Override .equals for User.
-   * @param obj
-   * @return
+   * @param obj root of class
+   * @return the object if user matches stored id
    */
   @Override
   public boolean equals(Object obj) {

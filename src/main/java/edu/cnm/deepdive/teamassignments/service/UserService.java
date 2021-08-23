@@ -22,16 +22,20 @@ public class UserService implements Converter <Jwt, UsernamePasswordAuthenticati
   private final UserRepository repository;
 
 
+  /**
+   * Uses Jwt converter to access the user repository.
+   * @param repository will be accessed after verification of user's username and password
+   */
   @Autowired
   public UserService(UserRepository repository) {
     this.repository = repository;
   }
 
   /**
-   * Get or create users.
-   * @param oauthKey
-   * @param displayName
-   * @return
+   * Get user or prompts to create user if user does not exist.
+   * @param oauthKey is required for verification
+   * @param displayName required for verification
+   * @return saved user
    */
   public synchronized User getOrCreate(String oauthKey, String displayName) {
     return repository.findFirstByOauthKey(oauthKey)
@@ -50,8 +54,8 @@ public class UserService implements Converter <Jwt, UsernamePasswordAuthenticati
 
   /**
    * Save user to database.
-   * @param user
-   * @return
+   * @param user required to save to database
+   * @return saved user
    */
   public User save(User user) {
     return repository.save(user);   //TODO review with team
@@ -63,8 +67,8 @@ public class UserService implements Converter <Jwt, UsernamePasswordAuthenticati
 
   /**
    * Get or create authentication token for user.
-   * @param jwt
-   * @return
+   * @param jwt extends AbstractOAuth2Token
+   * @return authentication bearer token
    */
   @Override
   public UsernamePasswordAuthenticationToken convert(Jwt jwt) {

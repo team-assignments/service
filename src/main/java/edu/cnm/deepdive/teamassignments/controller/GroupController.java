@@ -3,10 +3,13 @@ package edu.cnm.deepdive.teamassignments.controller;
 import edu.cnm.deepdive.teamassignments.model.entity.Group;
 import edu.cnm.deepdive.teamassignments.model.entity.User;
 import edu.cnm.deepdive.teamassignments.service.GroupService;
+import java.net.URI;
 import java.util.List;
 import java.util.function.Function;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,10 +47,19 @@ public class GroupController {
    * @return provides new group object via Json.
    */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Group post(@RequestBody Group group, Authentication auth) {
+  public ResponseEntity<Group> post(@RequestBody Group group, Authentication auth) {
 
-    return service.save(group, (User) auth.getPrincipal());
+    group = service.save(group, (User) auth.getPrincipal());
 
+    URI location = WebMvcLinkBuilder
+        .linkTo(
+            WebMvcLinkBuilder
+                .methodOn(GroupController.class)
+                .get(group.getId(), auth)
+        )
+        .toUri();
+
+    return ResponseEntity.created(location).body(group);
   }
 
   /**
@@ -111,7 +123,7 @@ public class GroupController {
   }
 
   /**
-   *
+   * Iterable group object used to get all groups created.
    * @param ownedOnly Iterable list for owned groups.
    * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
    * @return Group Iterable via Json.

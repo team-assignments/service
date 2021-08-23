@@ -5,9 +5,13 @@ import edu.cnm.deepdive.teamassignments.model.entity.Group;
 import edu.cnm.deepdive.teamassignments.model.entity.Task;
 import edu.cnm.deepdive.teamassignments.model.entity.User;
 import edu.cnm.deepdive.teamassignments.service.TaskService;
+import java.net.URI;
 import java.util.Date;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,25 +40,56 @@ public class TaskController {
 
 
   /**
-   *
+   * post mapping for adding a task.
    * @param task Task object from task entity class.
    * @param groupId parent group id.
    * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
    * @return Task object via json.
    */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Task post(@RequestBody Task task, @PathVariable long groupId, Authentication auth) {
+  public ResponseEntity<Task> post(@RequestBody Task task, @PathVariable long groupId, Authentication auth) {
 
-    return service
+    task = service
         .save(task, (User) auth.getPrincipal(), groupId)
         .orElseThrow();
 
+    URI location = WebMvcLinkBuilder
+        .linkTo(
+            WebMvcLinkBuilder.methodOn(TaskController.class)
+                .get(task.getId(), auth, groupId)
+        ).toUri();
 
+    return ResponseEntity.created(location).body(task);
 
   }
 
+
   /**
-   *
+   * get mapping for recieving a task.
+   * @param id task id.
+   * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
+   * @param groupId parent group id.
+   * @return task object via json.
+   */
+  @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Task get(@PathVariable long id, Authentication auth, @PathVariable long groupId) {
+    return service
+        .get(id, groupId, (User) auth.getPrincipal())
+        .orElseThrow();
+
+    // (id, (User) auth.getPrincipal()).orElseThrow();
+  }
+
+/*  @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Optional<Task> get(@PathVariable long id, Authentication auth, @PathVariable long groupId) {
+
+
+    return service.get(id, groupId, (User) auth.getPrincipal());
+
+  }*/
+
+  /**
+   * boolean value meant to assign a task to a user.
    * @param assigned boolean value verifying assignment of group.
    * @param groupId parent group id.
    * @param taskId task id of task within the group.
@@ -71,7 +106,7 @@ public class TaskController {
   }
 
   /**
-   *
+   * Get mapping for isAssigned boolean value.
    * @param groupId parent group id.
    * @param taskId task id of task within the group.
    * @param memberId member id of member within the group.
@@ -87,7 +122,7 @@ public class TaskController {
   }
 
   /**
-   *
+   * gets all tasks available for that specific group.
    * @param groupId parent group id.
    * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
    * @return provide Iterable Task Object.
