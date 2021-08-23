@@ -6,6 +6,9 @@ import edu.cnm.deepdive.teamassignments.model.entity.User;
 import java.util.Date;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+/**
+ * Repository used for task class.
+ */
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
   Iterable<Task> findAllByGroupAndCompletedAndDueDateBeforeOrderByDueDateAsc(Group group, boolean completed, Date cutoff);

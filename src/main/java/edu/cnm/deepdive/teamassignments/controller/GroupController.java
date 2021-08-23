@@ -123,7 +123,7 @@ public class GroupController {
   }
 
   /**
-   *
+   * Iterable group object used to get all groups created.
    * @param ownedOnly Iterable list for owned groups.
    * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
    * @return Group Iterable via Json.

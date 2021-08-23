@@ -40,7 +40,7 @@ public class TaskController {
 
 
   /**
-   *
+   * post mapping for adding a task.
    * @param task Task object from task entity class.
    * @param groupId parent group id.
    * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
@@ -64,7 +64,13 @@ public class TaskController {
   }
 
 
-
+  /**
+   * get mapping for recieving a task.
+   * @param id task id.
+   * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
+   * @param groupId parent group id.
+   * @return task object via json.
+   */
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Task get(@PathVariable long id, Authentication auth, @PathVariable long groupId) {
     return service
@@ -83,7 +89,7 @@ public class TaskController {
   }*/
 
   /**
-   *
+   * boolean value meant to assign a task to a user.
    * @param assigned boolean value verifying assignment of group.
    * @param groupId parent group id.
    * @param taskId task id of task within the group.
@@ -100,7 +106,7 @@ public class TaskController {
   }
 
   /**
-   *
+   * Get mapping for isAssigned boolean value.
    * @param groupId parent group id.
    * @param taskId task id of task within the group.
    * @param memberId member id of member within the group.
@@ -116,7 +122,7 @@ public class TaskController {
   }
 
   /**
-   *
+   * gets all tasks available for that specific group.
    * @param groupId parent group id.
    * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
    * @return provide Iterable Task Object.
