@@ -90,47 +90,86 @@ public class Group {
 //  @Nullable
 //  private final List<User> invitedUsers = new LinkedList<>();
 
-
+  /**
+   * Gets the group's id
+   * @return the group's id in long format
+   */
   public Long getId() {
     return id;
   }
 
+  /**
+   * Gets the Date the group was created
+   * @return the group's creation date
+   */
   public Date getCreationDate() {
     return creationDate;
   }
 
-
+  /**
+   * Gets the owner of the group
+   * @return the group owner
+   */
   public User getOwner() {
     return owner;
   }
 
+  /**
+   * Sets teh owner of the group
+   * @param owner of the group
+   */
   public void setOwner(User owner) {
     this.owner = owner;
   }
 
+  /**
+   * Gets the name of user.
+   * @return the name of user in string format
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Sets the name of user
+   * @param name of user in string format
+   */
   public void setName(String name) {
     this.name = name;
   }
 
+  /**
+   * Gets a list of Tasks
+   * @return list of task
+   */
   @NonNull
   public List<Task> getTasks() {
     return tasks;
   }
 
+  /**
+   * Sets teh user
+   * @return the user
+   */
   @NonNull
   public Set<User> getUsers() {
     return users;
   }
 
+  /**
+   * The hashcode to verify user
+   * @return the hascode id
+   */
   @Override
   public int hashCode() {
     return Objects.hashCode(id);
   }
 
+  /**
+   * Boolean status for the group class will be returned if it matches the request id.
+   * @param obj the root of the class
+   * @return the id of the group if it matches the request.
+   */
   @Override
   public boolean equals(Object obj) {
     boolean matches = false;

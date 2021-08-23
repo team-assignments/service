@@ -95,7 +95,7 @@ public class Task {
 
   /**
    * getter for id.
-   * @return
+   * @return long id for task
    */
   public Long getId() {
     return id;
@@ -103,7 +103,7 @@ public class Task {
 
   /**
    * getter for postDate.
-   * @return
+   * @return post date task was created
    */
   public Date getPostDate() {
     return postDate;
@@ -111,7 +111,7 @@ public class Task {
 
   /**
    * getter for dueDate.
-   * @return
+   * @return due date of task
    */
   public Date getDueDate() {
     return dueDate;
@@ -119,7 +119,7 @@ public class Task {
 
   /**
    * setter for dueDate.
-   * @param dueDate
+   * @param dueDate for task
    */
   public void setDueDate(Date dueDate) {
     this.dueDate = dueDate;
@@ -127,7 +127,7 @@ public class Task {
 
   /**
    * getter for user.
-   * @return
+   * @return user
    */
   public User getUser() {
     return user;
@@ -135,7 +135,7 @@ public class Task {
 
   /**
    * setter for user.
-   * @param user
+   * @param user of task
    */
   public void setUser(User user) {
     this.user = user;
@@ -143,7 +143,7 @@ public class Task {
 
   /**
    * getter for group.
-   * @return
+   * @return group
    */
   public Group getGroup() {
     return group;
@@ -151,7 +151,7 @@ public class Task {
 
   /**
    * setter for group.
-   * @param group
+   * @param group is required
    */
   public void setGroup(Group group) {
     this.group = group;
@@ -159,7 +159,7 @@ public class Task {
 
   /**
    * boolean for isCompleted.
-   * @return
+   * @return boolean completed status
    */
   public boolean isCompleted() {
     return completed;
@@ -167,7 +167,7 @@ public class Task {
 
   /**
    * boolean is completed.
-   * @param completed
+   * @param completed boolean
    */
   public void setCompleted(boolean completed) {
     this.completed = completed;
@@ -175,7 +175,7 @@ public class Task {
 
   /**
    * boolean is confirmed complete.
-   * @return
+   * @return confirmed complete status, ture or false
    */
   public boolean isConfirmedComplete() {
     return confirmedComplete;
@@ -183,7 +183,7 @@ public class Task {
 
   /**
    * boolean set confirmed complete.
-   * @param confirmedComplete
+   * @param confirmedComplete boolean
    */
   public void setConfirmedComplete(boolean confirmedComplete) {
     this.confirmedComplete = confirmedComplete;
