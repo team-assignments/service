@@ -7,6 +7,7 @@ import edu.cnm.deepdive.teamassignments.model.entity.Group;
 import edu.cnm.deepdive.teamassignments.model.entity.Task;
 import edu.cnm.deepdive.teamassignments.model.entity.User;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -77,7 +78,8 @@ public class TaskService {
         .flatMap((group) -> taskRepository.findById(taskId));
   }
 
-  public Optional<Task> put(long groupId, long taskId, Task task, User user) {   //TODO review with team
+  public Optional<Task> put(long groupId, long taskId, Task task,
+      User user) {   //TODO review with team
     return groupRepository
         .findById(groupId)
         .map((group) -> group.getOwner().equals(user)
@@ -120,23 +122,26 @@ public class TaskService {
   /**
    * Delete a task
    *
-   * @param id
+   * @param taskId
    * @param user
-   * @param group
    */
-  public void delete(long id, User user, Group group) {
-
-    taskRepository.findById(id)
+  public Optional<Task> delete(long groupId, long taskId, User user) {
+    return groupRepository
+        .findById(groupId)
+        .map((group) -> group.getOwner().equals(user)
+            ? group
+            : null
+        )
+        .flatMap((group) -> taskRepository.findById(taskId)
+            .map((task) -> task.getGroup().equals(group) //TODO check other conditions for deletion
+                ? task
+                : null
+            )
+        )
         .map((task) -> {
-          if (task.isConfirmedComplete() && group.getOwner().getId().equals(
-              user.getId())) {             // if(group.getOwner().getId().equals(user.getId())) {
-            return task;
-          } else {
-            return null;
-          }
-        })
-        .ifPresent(taskRepository::delete);
-
+          taskRepository.delete(task);
+          return task;
+        });
   }
 
   public Optional<Boolean> assign(boolean assigned, long groupId, long taskId, long memberId,
