@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.teamassignments.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -48,8 +49,9 @@ public class Group {
   private String name;
 
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
   @OrderBy ("postDate DESC")
+  @JsonIgnore
   private final List<Task> tasks = new LinkedList<>();
 
   @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
@@ -59,14 +61,9 @@ public class Group {
       inverseJoinColumns = @JoinColumn(name = "user_id", nullable = false, updatable = false)
   )
   @OrderBy("displayName ASC")
+  @JsonIgnore
   private final Set<User> users = new LinkedHashSet<>();
 
-
-// // @Column(nullable = false, updatable = true)
-//  @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
-//  @OrderBy("displayName ASC")
-//  @Nullable
-//  private final List<User> invitedUsers = new LinkedList<>();
 
   /**
    * getter for id.
@@ -155,11 +152,4 @@ public class Group {
     }
     return matches;
   }
-
-
-
-//  @Nullable
-//  public List<User> getInvitedUsers() {
-//    return invitedUsers;
-//  }
 }

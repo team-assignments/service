@@ -1,14 +1,11 @@
 package edu.cnm.deepdive.teamassignments.model.entity;
 
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -49,7 +46,7 @@ public class Task {
 
 
   @NonNull
-  @ManyToOne(fetch = FetchType.EAGER, optional = false)
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "group_id", nullable = false, updatable = false)
   @JsonIgnore
   private Group group;
@@ -69,6 +66,7 @@ public class Task {
 
   /**
    * getter for id.
+   *
    * @return
    */
   public Long getId() {
@@ -77,6 +75,7 @@ public class Task {
 
   /**
    * getter for postDate.
+   *
    * @return
    */
   public Date getPostDate() {
@@ -85,6 +84,7 @@ public class Task {
 
   /**
    * getter for dueDate.
+   *
    * @return
    */
   public Date getDueDate() {
@@ -93,6 +93,7 @@ public class Task {
 
   /**
    * setter for dueDate.
+   *
    * @param dueDate
    */
   public void setDueDate(Date dueDate) {
@@ -101,6 +102,7 @@ public class Task {
 
   /**
    * getter for user.
+   *
    * @return
    */
   public User getUser() {
@@ -109,6 +111,7 @@ public class Task {
 
   /**
    * setter for user.
+   *
    * @param user
    */
   public void setUser(User user) {
@@ -117,6 +120,7 @@ public class Task {
 
   /**
    * getter for group.
+   *
    * @return
    */
   public Group getGroup() {
@@ -125,6 +129,7 @@ public class Task {
 
   /**
    * setter for group.
+   *
    * @param group
    */
   public void setGroup(Group group) {
@@ -133,6 +138,7 @@ public class Task {
 
   /**
    * boolean for isCompleted.
+   *
    * @return
    */
   public boolean isCompleted() {
@@ -141,6 +147,7 @@ public class Task {
 
   /**
    * boolean is completed.
+   *
    * @param completed
    */
   public void setCompleted(boolean completed) {
@@ -149,6 +156,7 @@ public class Task {
 
   /**
    * boolean is confirmed complete.
+   *
    * @return
    */
   public boolean isConfirmedComplete() {
@@ -157,6 +165,7 @@ public class Task {
 
   /**
    * boolean set confirmed complete.
+   *
    * @param confirmedComplete
    */
   public void setConfirmedComplete(boolean confirmedComplete) {
@@ -187,15 +196,16 @@ public class Task {
 
   /**
    * Override .equals for User.
+   *
    * @param obj
    * @return
    */
   @Override
   public boolean equals(Object obj) {
     boolean matches = false;
-    if(this == obj) {
+    if (this == obj) {
       matches = true;
-    } else if(obj instanceof Task){
+    } else if (obj instanceof Task) {
       Task other = (Task) obj;
       matches = (id != null && id.equals(other.id));
     }

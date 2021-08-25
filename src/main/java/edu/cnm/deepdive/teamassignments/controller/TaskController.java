@@ -65,6 +65,13 @@ public class TaskController {
         .orElseThrow();
   }
 
+  @PutMapping(value = "/{taskId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Task put(@PathVariable long groupId, @PathVariable long taskId, @RequestBody Task task, Authentication auth) {
+    return service
+        .put(groupId, taskId, task, (User) auth.getPrincipal())
+        .orElseThrow();
+  }
+
   @PutMapping(value ="/{taskId}/members/{memberId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public boolean assign(@RequestBody boolean assigned, @PathVariable long groupId, @PathVariable long taskId, @PathVariable long memberId, Authentication auth) {
 

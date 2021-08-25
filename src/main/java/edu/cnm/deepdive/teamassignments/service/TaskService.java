@@ -77,6 +77,22 @@ public class TaskService {
         .flatMap((group) -> taskRepository.findById(taskId));
   }
 
+  public Optional<Task> put(long groupId, long taskId, Task task, User user) {   //TODO review with team
+    return groupRepository
+        .findById(groupId)
+        .map((group) -> group.getOwner().equals(user)
+            ? group
+            : null
+        )
+        .flatMap((group) -> taskRepository.findById(taskId))
+        .map((savedTask) -> {
+          savedTask.setTitle(task.getTitle());
+          savedTask.setDescription(task.getDescription());
+          savedTask.setDueDate(task.getDueDate());
+          return taskRepository.save(savedTask);
+        });
+  }
+
   /**
    * Mark a task as completed.
    *
