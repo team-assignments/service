@@ -64,18 +64,17 @@ public class TaskService {
   /**
    * Look up tasks for a given user.
    *
-   * @param id
+   * @param taskId
    * @return
    */
-  public Optional<Task> get(long id) {   //TODO review with team
-    return taskRepository.findById(id)
-        .map((task) -> {
-          if (task.getUser().getId().equals(task.getId())) {
-            return task;
-          } else {
-            return null;
-          }
-        });
+  public Optional<Task> get(long groupId, long taskId, User user) {   //TODO review with team
+    return groupRepository
+        .findById(groupId)
+        .map((group) -> (group.getUsers().contains(user) || group.getOwner().equals(user))
+            ? group
+            : null
+        )
+        .flatMap((group) -> taskRepository.findById(taskId));
   }
 
   /**

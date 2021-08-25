@@ -5,9 +5,12 @@ import edu.cnm.deepdive.teamassignments.model.entity.Group;
 import edu.cnm.deepdive.teamassignments.model.entity.Task;
 import edu.cnm.deepdive.teamassignments.model.entity.User;
 import edu.cnm.deepdive.teamassignments.service.TaskService;
+import java.net.URI;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,13 +39,30 @@ public class TaskController {
 
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Task post(@RequestBody Task task, @PathVariable long groupId, Authentication auth) {
+  public ResponseEntity<Task> post(@RequestBody Task task, @PathVariable long groupId, Authentication auth) {
 
     return service
         .save(task, (User) auth.getPrincipal(), groupId)
+        .map((t) -> {
+          URI location = WebMvcLinkBuilder
+              .linkTo(
+                WebMvcLinkBuilder
+                    .methodOn(TaskController.class)
+                    .get(groupId, t.getId(), auth)
+              )
+              .toUri();
+          return ResponseEntity.created(location).body(t);
+        })
         .orElseThrow();
     //TODO return a response entity for a created resource
 
+  }
+
+  @GetMapping(value = "/{taskId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Task get(@PathVariable long groupId, @PathVariable long taskId, Authentication auth) {
+    return service
+        .get(groupId, taskId, (User) auth.getPrincipal())
+        .orElseThrow();
   }
 
   @PutMapping(value ="/{taskId}/members/{memberId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

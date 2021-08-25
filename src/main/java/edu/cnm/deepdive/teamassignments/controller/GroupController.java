@@ -102,7 +102,7 @@ public class GroupController {
    * @param auth
    * @return
    */
-  @PutMapping(value = "/{id:\\d+}/name", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PutMapping(value = "/{id:\\d+}/name", consumes = MediaType.TEXT_PLAIN_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
   public String replaceName(@PathVariable long id, @RequestBody String name, Authentication auth) {
 
     return service.rename(id, name, (User) auth.getPrincipal())
