@@ -31,6 +31,7 @@ public class TaskController {
 
   /**
    * constructor for Task.
+   *
    * @param service TaskService class, used for repository work.
    */
   public TaskController(TaskService service) {
@@ -40,9 +41,11 @@ public class TaskController {
 
   /**
    * post mapping for adding a task.
-   * @param task Task object from task entity class.
+   *
+   * @param task    Task object from task entity class.
    * @param groupId parent group id.
-   * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
+   * @param auth    token for an authenticated principal once the request has been processed by the
+   *                AuthenticationManager.authenticate(Authentication) method.
    * @return Task object via json.
    */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -91,11 +94,13 @@ public class TaskController {
 
   /**
    * boolean value meant to assign a task to a user.
+   *
    * @param assigned boolean value verifying assignment of group.
-   * @param groupId parent group id.
-   * @param taskId task id of task within the group.
+   * @param groupId  parent group id.
+   * @param taskId   task id of task within the group.
    * @param memberId member id of member within the group.
-   * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
+   * @param auth     token for an authenticated principal once the request has been processed by the
+   *                 AuthenticationManager.authenticate(Authentication) method.
    * @return provide boolean value verifying ownership of task.
    */
   @PutMapping(value = "/{taskId}/members/{memberId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -109,10 +114,12 @@ public class TaskController {
 
   /**
    * Get mapping for isAssigned boolean value.
-   * @param groupId parent group id.
-   * @param taskId task id of task within the group.
+   *
+   * @param groupId  parent group id.
+   * @param taskId   task id of task within the group.
    * @param memberId member id of member within the group.
-   * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
+   * @param auth     token for an authenticated principal once the request has been processed by the
+   *                 AuthenticationManager.authenticate(Authentication) method.
    * @return provide assignment verification of task.
    */
   @GetMapping(value = "/{taskId}/members/{memberId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -126,8 +133,10 @@ public class TaskController {
 
   /**
    * gets all tasks available for that specific group.
+   *
    * @param groupId parent group id.
-   * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
+   * @param auth    token for an authenticated principal once the request has been processed by the
+   *                AuthenticationManager.authenticate(Authentication) method.
    * @return provide Iterable Task Object.
    */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

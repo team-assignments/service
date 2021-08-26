@@ -6,8 +6,6 @@ import edu.cnm.deepdive.teamassignments.model.dao.UserRepository;
 import edu.cnm.deepdive.teamassignments.model.entity.Group;
 import edu.cnm.deepdive.teamassignments.model.entity.Task;
 import edu.cnm.deepdive.teamassignments.model.entity.User;
-import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
