@@ -65,7 +65,7 @@ public class Group {
   /**
    * Linked list of tasks for specified group.
    */
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
   @OrderBy ("postDate DESC")
   @JsonIgnore
   private final List<Task> tasks = new LinkedList<>();
@@ -83,12 +83,6 @@ public class Group {
   @JsonIgnore
   private final Set<User> users = new LinkedHashSet<>();
 
-
-// // @Column(nullable = false, updatable = true)
-//  @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
-//  @OrderBy("displayName ASC")
-//  @Nullable
-//  private final List<User> invitedUsers = new LinkedList<>();
 
   /**
    * Gets the group's id
@@ -148,7 +142,7 @@ public class Group {
   }
 
   /**
-   * Sets teh user
+   * Sets the user
    * @return the user
    */
   @NonNull
@@ -181,11 +175,4 @@ public class Group {
     }
     return matches;
   }
-
-
-
-//  @Nullable
-//  public List<User> getInvitedUsers() {
-//    return invitedUsers;
-//  }
 }

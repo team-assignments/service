@@ -1,14 +1,11 @@
 package edu.cnm.deepdive.teamassignments.model.entity;
 
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -63,7 +60,7 @@ public class Task {
    * Foreign group object used to identify what group the task is associated with.
    */
   @NonNull
-  @ManyToOne(fetch = FetchType.EAGER, optional = false)
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "group_id", nullable = false, updatable = false)
   @JsonIgnore
   private Group group;
@@ -239,9 +236,9 @@ public class Task {
   @Override
   public boolean equals(Object obj) {
     boolean matches = false;
-    if(this == obj) {
+    if (this == obj) {
       matches = true;
-    } else if(obj instanceof Task){
+    } else if (obj instanceof Task) {
       Task other = (Task) obj;
       matches = (id != null && id.equals(other.id));
     }

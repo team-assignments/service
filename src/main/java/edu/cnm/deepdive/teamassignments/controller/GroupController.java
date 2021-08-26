@@ -114,7 +114,7 @@ public class GroupController {
    * @param auth token for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
    * @return provides String object via Json.
    */
-  @PutMapping(value = "/{id:\\d+}/name", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PutMapping(value = "/{id:\\d+}/name", consumes = MediaType.TEXT_PLAIN_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
   public String replaceName(@PathVariable long id, @RequestBody String name, Authentication auth) {
 
     return service.rename(id, name, (User) auth.getPrincipal())

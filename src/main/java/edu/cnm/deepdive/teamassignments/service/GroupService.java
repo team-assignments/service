@@ -180,6 +180,11 @@ public class GroupService {
             return null;
           }
         })
+        .map((group) -> {
+          group.getTasks().clear();
+          group.getUsers().clear();
+          return repository.save(group);
+        })
         .ifPresent(repository::delete);
 
   }

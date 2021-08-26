@@ -53,8 +53,8 @@ public class User {
   private Date creationDate;
 
   @NonNull
-  @JsonIgnore
   @Column(nullable = false, updatable = false, unique = true)
+  @JsonIgnore
   private String oauthKey;
 
   @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users") // added cascade
@@ -70,7 +70,7 @@ public class User {
   @JsonIgnore
   private final List<Group> ownedGroups = new LinkedList<>();
 
-  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @OrderBy("dueDate desc")
   @NonNull
   @JsonIgnore
