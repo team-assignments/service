@@ -21,11 +21,11 @@ public class TaskService {
   private final UserRepository userRepository;
 
   /**
-   * Taks service repository.
+   * access task service repository.
    *
-   * @param repository
-   * @param groupRepository
-   * @param userRepository
+   * @param repository task repository
+   * @param groupRepository  class
+   * @param userRepository   class
    */
   @Autowired
   public TaskService(TaskRepository repository,
@@ -38,10 +38,9 @@ public class TaskService {
 
   /**
    * Save a new task.
-   *
-   * @param task
-   * @param user
-   * @return
+   * @param task model entity
+   * @param user verified at login
+   * @return will save task to repository
    */
   public Optional<Task> save(Task task, User user, long groupId) {
     return groupRepository
@@ -63,8 +62,8 @@ public class TaskService {
   /**
    * Look up tasks for a given user.
    *
-   * @param taskId
-   * @return
+   * @param taskId by long format
+   * @return group repository tasks
    */
   public Optional<Task> get(long groupId, long taskId, User user) {   //TODO review with team
     return groupRepository
@@ -96,8 +95,8 @@ public class TaskService {
   /**
    * Mark a task as completed.
    *
-   * @param id
-   * @param user
+   * @param id of task
+   * @param user is verified at login
    */
   public void completed(long id, User user) {   //TODO review with team
 
@@ -120,8 +119,8 @@ public class TaskService {
   /**
    * Delete a task
    *
-   * @param taskId
-   * @param user
+   * @param taskId for selected task
+   * @param user verifed at login
    */
   public Optional<Task> delete(long groupId, long taskId, User user) {
     return groupRepository
@@ -142,6 +141,15 @@ public class TaskService {
         });
   }
 
+  /**
+   * To see if a task is assigned to group and member.
+   * @param assigned boolean for is assigned
+   * @param groupId for selected group
+   * @param taskId for selected task
+   * @param memberId that will be assigned task
+   * @param user verified at log in
+   * @return will return the group repository
+   */
   public Optional<Boolean> assign(boolean assigned, long groupId, long taskId, long memberId,
       User user) {
 
@@ -177,6 +185,14 @@ public class TaskService {
 
   }
 
+  /**
+   * To see if a task is assigned to group and member.
+   * @param groupId for selected group
+   * @param taskId for selected task
+   * @param memberId that will be assigned task
+   * @param user verified at log in
+   * @return will return the group repository
+   */
   public Optional<Boolean> isAssigned(long groupId, long taskId, long memberId, User user) {
 
     return groupRepository
@@ -202,6 +218,12 @@ public class TaskService {
 
   }
 
+  /**
+   * This method will get a task by id.
+   * @param groupId by long format
+   * @param user required, will be verifed by log in
+   * @return tasks in the choses group
+   */
   public Iterable<Task> getTasks(long groupId, User user) {
     return groupRepository
         .findById(groupId)

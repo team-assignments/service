@@ -23,8 +23,8 @@ public class GroupService {
   /**
    * Constructor for Group service.
    *
-   * @param userService
-   * @param repository
+   * @param userService authenticates user
+   * @param repository group repository
    */
   @Autowired
   public GroupService(UserService userService,
@@ -36,9 +36,9 @@ public class GroupService {
   /**
    * Save a new group and set creator to group owner.
    *
-   * @param group
-   * @param user
-   * @return
+   * @param group required to save
+   * @param user authenticated
+   * @return a saved group to repository
    */
   public final Group save(Group group, User user) {
     user = userService.get(user.getId()).orElseThrow();
@@ -47,6 +47,12 @@ public class GroupService {
     return repository.save(group);
   }
 
+  /**
+   * Gets groups owned by user
+   * @param ownedOnly boolean, does belong to user
+   * @param user autheticated
+   * @return all groups by owner
+   */
   public final Iterable<Group> getGroups(boolean ownedOnly, User user) {
     return ownedOnly
         ? repository.findAllByOwnerOrderByNameAsc(user)
@@ -56,8 +62,8 @@ public class GroupService {
   /**
    * Basic group save method
    *
-   * @param group
-   * @return
+   * @param group from Group Class
+   * @return saved group
    */
   public final Group save(Group group) {
     return repository.save(group);
@@ -66,11 +72,11 @@ public class GroupService {
   /**
    * Allows group owners to add or remove members to or from an existing group.
    *
-   * @param groupId
-   * @param userId
-   * @param putInGroup
-   * @param owner
-   * @return
+   * @param groupId is long
+   * @param userId is long
+   * @param putInGroup check true/false
+   * @param owner authenticated at log in
+   * @return add member to group
    */
   public Boolean toggleMembership(long groupId, long userId, boolean putInGroup, User owner) {
     return repository
@@ -99,10 +105,10 @@ public class GroupService {
   /**
    * Check to see if a user is a member of a group.
    *
-   * @param groupId
-   * @param userId
-   * @param requestor
-   * @return
+   * @param groupId by long format
+   * @param userId long format
+   * @param requestor User, authenticated
+   * @return repository for group
    */
   public boolean checkMembership(long groupId, long userId, User requestor) {
     return repository
@@ -120,9 +126,9 @@ public class GroupService {
   /**
    * Gets all members of a group.
    *
-   * @param id
-   * @param user
-   * @return
+   * @param id of group
+   * @param user authenticated
+   * @return return group if exist
    */
   public Optional<Group> get(long id, User user) {
 
@@ -142,10 +148,10 @@ public class GroupService {
   /**
    * Allows a group to be renamed.
    *
-   * @param id
-   * @param name
-   * @param user
-   * @return
+   * @param id of group
+   * @param name of group
+   * @param user verified at login
+   * @return edited group
    */
   public Optional<Group> rename(long id, String name, User user) {
 
@@ -167,8 +173,8 @@ public class GroupService {
   /**
    * Allows a group to be deleted.
    *
-   * @param id
-   * @param user
+   * @param id group id by long
+   * @param user verified at log in
    */
   public void delete(long id, User user) {
 
