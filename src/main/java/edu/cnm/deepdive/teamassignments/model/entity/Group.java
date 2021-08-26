@@ -26,34 +26,53 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.lang.NonNull;
 
-
+/**
+ * Entity class for Group object using JPA mapping.
+ */
 @Entity
 @Table(name = "group_team")
 public class Group {
 
+  /**
+   * Long object used to identify the group.
+   */
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
   @Column(name = "group_id",nullable = false,updatable = false)
   private Long id;
 
+  /**
+   * Foreign key identifying owner of group with user id.
+   */
   @ManyToOne(fetch = FetchType.EAGER, optional = false)
   @JoinColumn(name = "owner_id", nullable = false, updatable = false)
   private User owner;
 
+  /**
+   * Timestamp Date object verifying group creation date.
+   */
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column(nullable = false, updatable = false)
   private Date creationDate;
 
+  /**
+   * String object providing group name.
+   */
   @Column(nullable = false, updatable = true, unique = true)
   private String name;
 
-
+  /**
+   * Linked list of tasks for specified group.
+   */
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
   @OrderBy ("postDate DESC")
   @JsonIgnore
   private final List<Task> tasks = new LinkedList<>();
 
+  /**
+   * Many to many relationship mapping between Users and Groups.
+   */
   @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinTable(
       name = "user_group_relationship",
@@ -66,56 +85,56 @@ public class Group {
 
 
   /**
-   * getter for id.
-   * @return
+   * Gets the group's id
+   * @return the group's id in long format
    */
   public Long getId() {
     return id;
   }
 
   /**
-   * getter for creationDate.
-   * @return
+   * Gets the Date the group was created
+   * @return the group's creation date
    */
   public Date getCreationDate() {
     return creationDate;
   }
 
   /**
-   * getter for owner.
-   * @return
+   * Gets the owner of the group
+   * @return the group owner
    */
   public User getOwner() {
     return owner;
   }
 
   /**
-   * setter for owner.
-   * @param owner
+   * Sets teh owner of the group
+   * @param owner of the group
    */
   public void setOwner(User owner) {
     this.owner = owner;
   }
 
   /**
-   * getter for name.
-   * @return
+   * Gets the name of user.
+   * @return the name of user in string format
    */
   public String getName() {
     return name;
   }
 
   /**
-   * setter for name.
-   * @param name
+   * Sets the name of user
+   * @param name of user in string format
    */
   public void setName(String name) {
     this.name = name;
   }
 
   /**
-   * getter for list tasks.
-   * @return
+   * Gets a list of Tasks
+   * @return list of task
    */
   @NonNull
   public List<Task> getTasks() {
@@ -123,23 +142,27 @@ public class Group {
   }
 
   /**
-   * getter for users.
-   * @return
+   * Sets the user
+   * @return the user
    */
   @NonNull
   public Set<User> getUsers() {
     return users;
   }
 
+  /**
+   * The hashcode to verify user
+   * @return the hascode id
+   */
   @Override
   public int hashCode() {
     return Objects.hashCode(id);
   }
 
   /**
-   * Override .equals for User.
-   * @param obj
-   * @return
+   * Boolean status for the group class will be returned if it matches the request id.
+   * @param obj the root of the class
+   * @return the id of the group if it matches the request.
    */
   @Override
   public boolean equals(Object obj) {

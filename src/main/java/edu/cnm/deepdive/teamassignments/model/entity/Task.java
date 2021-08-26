@@ -17,57 +17,82 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.lang.NonNull;
 
+/**
+ * Entity class for Group object using JPA mapping.
+ */
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 public class Task {
 
-  //todo add name field
 
+  /**
+   * Long object used to identify the task.
+   */
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "task_id", nullable = false, updatable = false)
   private Long id;
 
 
+  /**
+   * Timestamp Date object verifying group creation date.
+   */
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column(nullable = false, updatable = false)
   private Date postDate;
 
-
+  /**
+   * Date object verifying group due date.
+   */
   @Temporal(TemporalType.TIMESTAMP)
   private Date dueDate;
 
+  /**
+   * Foreign user id key used to identify whom the task is assigned to.
+   */
   @ManyToOne(fetch = FetchType.LAZY, optional = true)
   @JoinColumn(name = "user_id")
   @JsonIgnore
-//investigate if assignment will happen immediately on creation, if so nullable = false. If chagne user updateable = false.
   private User user;
 
-
+  /**
+   * Foreign group object used to identify what group the task is associated with.
+   */
   @NonNull
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "group_id", nullable = false, updatable = false)
   @JsonIgnore
   private Group group;
 
+  /**
+   * boolean value to determine if the task is complete.
+   */
   @Column(nullable = false, updatable = true)
   private boolean completed;
 
+  /**
+   * boolean value to determine if the task was confirmed complete by the group owner.
+   */
   @Column(nullable = false, updatable = true)
   private boolean confirmedComplete;
 
+  /**
+   * String object providing title of the task.
+   */
   @NonNull
   @Column(nullable = false, length = 100)
   private String title;
 
+  /**
+   * String object providing additional information on task details.
+   */
   @Column(length = 1024)
   private String description;
 
   /**
    * getter for id.
-   *
-   * @return
+   * @return long id for task
    */
   public Long getId() {
     return id;
@@ -75,8 +100,7 @@ public class Task {
 
   /**
    * getter for postDate.
-   *
-   * @return
+   * @return post date task was created
    */
   public Date getPostDate() {
     return postDate;
@@ -84,8 +108,7 @@ public class Task {
 
   /**
    * getter for dueDate.
-   *
-   * @return
+   * @return due date of task
    */
   public Date getDueDate() {
     return dueDate;
@@ -93,8 +116,7 @@ public class Task {
 
   /**
    * setter for dueDate.
-   *
-   * @param dueDate
+   * @param dueDate for task
    */
   public void setDueDate(Date dueDate) {
     this.dueDate = dueDate;
@@ -102,8 +124,7 @@ public class Task {
 
   /**
    * getter for user.
-   *
-   * @return
+   * @return user
    */
   public User getUser() {
     return user;
@@ -111,8 +132,7 @@ public class Task {
 
   /**
    * setter for user.
-   *
-   * @param user
+   * @param user of task
    */
   public void setUser(User user) {
     this.user = user;
@@ -120,8 +140,7 @@ public class Task {
 
   /**
    * getter for group.
-   *
-   * @return
+   * @return group
    */
   public Group getGroup() {
     return group;
@@ -129,8 +148,7 @@ public class Task {
 
   /**
    * setter for group.
-   *
-   * @param group
+   * @param group is required
    */
   public void setGroup(Group group) {
     this.group = group;
@@ -138,8 +156,7 @@ public class Task {
 
   /**
    * boolean for isCompleted.
-   *
-   * @return
+   * @return boolean completed status
    */
   public boolean isCompleted() {
     return completed;
@@ -147,8 +164,7 @@ public class Task {
 
   /**
    * boolean is completed.
-   *
-   * @param completed
+   * @param completed boolean
    */
   public void setCompleted(boolean completed) {
     this.completed = completed;
@@ -156,8 +172,7 @@ public class Task {
 
   /**
    * boolean is confirmed complete.
-   *
-   * @return
+   * @return confirmed complete status, ture or false
    */
   public boolean isConfirmedComplete() {
     return confirmedComplete;
@@ -165,30 +180,49 @@ public class Task {
 
   /**
    * boolean set confirmed complete.
-   *
-   * @param confirmedComplete
+   * @param confirmedComplete boolean
    */
   public void setConfirmedComplete(boolean confirmedComplete) {
     this.confirmedComplete = confirmedComplete;
   }
 
+  /**
+   * Gets the title of the task
+   * @return the title in String format
+   */
   @NonNull
   public String getTitle() {
     return title;
   }
 
+  /**
+   * Sets the title of the task
+   * @param title of task in String format
+   */
   public void setTitle(@NonNull String title) {
     this.title = title;
   }
 
+  /**
+   * Gets the description of the task
+   * @return description of task
+   */
   public String getDescription() {
     return description;
   }
 
+  /**
+   * Sets the description of the task
+   * @param description of task in String format
+   */
   public void setDescription(String description) {
     this.description = description;
   }
 
+  /**
+   * The hashcode to verify identity
+   * @return id of hashcode
+   */
   @Override
   public int hashCode() {
     return Objects.hashCode(id);
@@ -196,9 +230,8 @@ public class Task {
 
   /**
    * Override .equals for User.
-   *
-   * @param obj
-   * @return
+   * @param obj the root of the class
+   * @return the task if it matches requested task
    */
   @Override
   public boolean equals(Object obj) {

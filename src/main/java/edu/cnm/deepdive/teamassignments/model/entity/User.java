@@ -53,6 +53,7 @@ public class User {
   private Date creationDate;
 
   @NonNull
+  @JsonIgnore
   @Column(nullable = false, updatable = false, unique = true)
   @JsonIgnore
   private String oauthKey;
@@ -77,24 +78,24 @@ public class User {
   private final List<Task> tasks = new LinkedList<>();
 
   /**
-   * getter for user id.
-   * @return
+   * gets the id of the task
+   * @return long id of the task
    */
   public Long getId() {
     return id;
   }
 
   /**
-   * setter for user id.
-   * @param id
+   * sets teh id of the task
+   * @param id of task in long
    */
   public void setId(Long id) {
     this.id = id;
   }
 
   /**
-   * getter for connected.
-   * @return
+   * Get the date user connected to server
+   * @return date user connected to server
    */
   @NonNull
   public Date getConnected() {
@@ -102,48 +103,48 @@ public class User {
   }
 
   /**
-   * setter for connected
-   * @param connected
+   * Sets the Date user connected
+   * @param connected is date user accessed server
    */
   public void setConnected(@NonNull Date connected) {
     this.connected = connected;
   }
 
   /**
-   * getter for displayName.
-   * @return
+   * Gets the display name of user
+   * @return display name of user
    */
   public String getDisplayName() {
     return displayName;
   }
 
   /**
-   * setter for displayName.
-   * @param displayName
+   * Sets the dispaly name of user
+   * @param displayName of user
    */
   public void setDisplayName(String displayName) {
     this.displayName = displayName;
   }
 
   /**
-   * getter for creationDate.
-   * @return
+   * Gets the Date item was created
+   * @return the creation date
    */
   public Date getCreationDate() {
     return creationDate;
   }
 
   /**
-   * setter for creationDate.
-   * @param creationDate
+   * Sets the Date created
+   * @param creationDate for created item
    */
   public void setCreationDate(Date creationDate) {
     this.creationDate = creationDate;
   }
 
   /**
-   * getter for oauthKey.
-   * @return
+   * Gets users oauth key
+   * @return users ouath key
    */
   @NonNull
   public String getOauthKey() {
@@ -151,16 +152,16 @@ public class User {
   }
 
   /**
-   * setter for oauthKey.
-   * @param oauthKey
+   * Sets the oauth key
+   * @param oauthKey of user
    */
   public void setOauthKey(@NonNull String oauthKey) {
     this.oauthKey = oauthKey;
   }
 
   /**
-   * getter for groups.
-   * @return
+   * Gets a list of groups
+   * @return groups
    */
   @NonNull
   public List<Group> getGroups() {
@@ -168,8 +169,8 @@ public class User {
   }
 
   /**
-   * getter for ownedGroups.
-   * @return
+   * Gets a list of Group
+   * @return owned groups
    */
   @NonNull
   public List<Group> getOwnedGroups() {
@@ -177,8 +178,8 @@ public class User {
   }
 
   /**
-   * getter for tasks.
-   * @return
+   * Gets a list of task
+   * @return list of tasks
    */
   @NonNull
   public List<Task> getTasks() {
@@ -186,8 +187,8 @@ public class User {
   }
 
   /**
-   * Override hashCode for User.
-   * @return
+   * Gets the hash code needed to verify user
+   * @return hash code id
    */
   @Override
   public int hashCode() {
@@ -196,8 +197,8 @@ public class User {
 
   /**
    * Override .equals for User.
-   * @param obj
-   * @return
+   * @param obj root of class
+   * @return the object if user matches stored id
    */
   @Override
   public boolean equals(Object obj) {
