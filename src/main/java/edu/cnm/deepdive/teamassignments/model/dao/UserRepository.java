@@ -39,4 +39,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
       + "and u1 = :user "
       + "order by u1.displayName")
   Iterable<User> findAllUserInMyGroups(User user);
+
+  Iterable<User> getAllByOrderByDisplayNameAsc();
+
 }

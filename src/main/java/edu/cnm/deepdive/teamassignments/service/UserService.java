@@ -65,6 +65,10 @@ public class UserService implements Converter <Jwt, UsernamePasswordAuthenticati
     return repository.findById(id);
   }
 
+  public Iterable<User> getAll() {
+    return repository.getAllByOrderByDisplayNameAsc();
+  }
+
   /**
    * Get or create authentication token for user.
    * @param jwt extends AbstractOAuth2Token
@@ -76,4 +80,6 @@ public class UserService implements Converter <Jwt, UsernamePasswordAuthenticati
     return new UsernamePasswordAuthenticationToken(
         getOrCreate(jwt.getSubject(), jwt.getClaim("name")), jwt.getTokenValue(), grants);
   }
+
+
 }
