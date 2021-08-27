@@ -1,17 +1,17 @@
 package edu.cnm.deepdive.teamassignments.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.cnm.deepdive.teamassignments.model.entity.Group;
 import edu.cnm.deepdive.teamassignments.model.entity.User;
 import edu.cnm.deepdive.teamassignments.service.GroupService;
 import java.net.URI;
-import java.util.List;
-import java.util.function.Function;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,14 +31,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class GroupController {
 
   private final GroupService service;
+  private final ObjectMapper mapper;
 
   /**
    * Constructor for group.
    *
    * @param service - GroupService class, used for repository work.
+   * @param mapper
    */
-  public GroupController(GroupService service) {
+  @Autowired
+  public GroupController(GroupService service, ObjectMapper mapper) {
     this.service = service;
+    this.mapper = mapper;
   }
 
   /**
@@ -77,8 +81,7 @@ public class GroupController {
    * @return provides boolean value verifying group membership.
    */
   @PutMapping(value = "/{groupId:\\d+}/members/{userId:\\d+}",
-      consumes = MediaType.TEXT_PLAIN_VALUE,
-      produces = MediaType.TEXT_PLAIN_VALUE)
+      consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public boolean putMembership(@PathVariable long groupId, @PathVariable long userId,
       @RequestBody boolean inGroup, Authentication auth) {
 
@@ -97,13 +100,10 @@ public class GroupController {
    * @return provides userId boolean value via JSON.
    */
   @GetMapping(value = "/{groupId:\\d+}/members/{userId:\\d+}",
-      produces = MediaType.TEXT_PLAIN_VALUE)
+      produces = MediaType.APPLICATION_JSON_VALUE)
   public boolean getMembership(@PathVariable long groupId, @PathVariable long userId,
       Authentication auth) {
-
     return service.checkMembership(groupId, userId, (User) auth.getPrincipal());
-
-
   }
 
   /**
@@ -116,9 +116,7 @@ public class GroupController {
    */
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Group get(@PathVariable long id, Authentication auth) {
-
     return service.get(id, (User) auth.getPrincipal()).orElseThrow();
-
   }
 
   /**
@@ -130,11 +128,20 @@ public class GroupController {
    *             AuthenticationManager.authenticate(Authentication) method.
    * @return provides String object via Json.
    */
-  @PutMapping(value = "/{id:\\d+}/name", consumes = MediaType.TEXT_PLAIN_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
-  public String replaceName(@PathVariable long id, @RequestBody String name, Authentication auth) {
-
-    return service.rename(id, name, (User) auth.getPrincipal())
+  @PutMapping(value = "/{id:\\d+}/name",
+      consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public String replaceName(@PathVariable long id, @RequestBody String name, Authentication auth)
+      throws JsonProcessingException {
+    return service
+        .rename(id, mapper.readValue(name, String.class), (User) auth.getPrincipal())
         .map(Group::getName)
+        .map((newName) -> {
+          try {
+            return mapper.writeValueAsString(newName);
+          } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException(e);
+          }
+        })
         .orElseThrow();
   }
 
