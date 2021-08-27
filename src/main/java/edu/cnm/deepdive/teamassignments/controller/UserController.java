@@ -63,4 +63,9 @@ public class UserController {
 
   //TODO no put mapping, dont know if it makes sense to add.
 
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public Iterable<User> get(Authentication auth) {
+    return userService.getAll();
+  }
+
 }

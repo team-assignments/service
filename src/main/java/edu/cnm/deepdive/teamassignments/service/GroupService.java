@@ -195,4 +195,15 @@ public class GroupService {
 
   }
 
+  public Iterable<User> getMembers(long id, User user) {
+    return repository
+        .findById(id)
+        .map((group) -> (group.getOwner().equals(user) || group.getUsers().contains(user))
+            ? group
+            : null
+        )
+        .map(Group::getUsers)
+        .orElseThrow();
+  }
+
 }
